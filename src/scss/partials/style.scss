@@ -1,0 +1,494 @@
+@import 'normalize';
+@import 'fonts';
+@import 'color';
+@import 'slick';
+
+*{
+	box-sizing: border-box;
+}
+html, body{
+	height: 100%;
+	font-family: $ComfortaaR;
+	font-size: 16px;
+}
+b{
+	font-family: $ComfortaaB;
+}
+/**/
+.wrp{
+	img{
+		max-width: 100%;
+		display: block;
+	}
+	.clearfix{
+		&:after{
+			content: '';
+			display: table;
+			clear: both;
+		}
+	}
+}
+/**/
+
+/*mixin*/
+@mixin row{
+	max-width: 1110px;
+	width: 100%;
+	margin: 0 auto;
+}
+@mixin flex{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	flex-wrap: wrap;
+}
+/**/
+
+
+/*btn*/
+.b-btn{
+	@include gradient1;
+	color: $primary1;
+	font-size: 16px;
+	text-decoration: none;
+	text-align: center;
+	display: block;
+	border-radius: 20px;
+	padding: 10px 13px;
+	margin: 0;
+	border: 0;
+	border-bottom: 2px solid $primary4;
+	&:hover{
+		border: 0;
+		margin-top: 2px;
+	}
+	&_slider{
+		width: 220px;
+	}
+	&_subscription{
+		position: absolute;
+		right: 0;
+		top: 0;
+		width: 65px;
+		background-image: url("../img/submit-arrow.png");
+		background-position: 0 0;
+
+	}
+}
+/**/
+
+/*form*/
+.b-form{
+	width: 100%;
+	padding: 0;
+	color: $primary1;
+	&__head{
+		font-size: 24px;
+		font-family: $ComfortaaB;
+		text-align: center;
+	}
+	&__title{
+		font-size: 14px;
+		font-family: $ComfortaaL;
+		text-align: center;
+		margin-bottom: 22px;
+	}
+	&__item{
+		margin-bottom: 20px;
+	}
+	.input-style{
+		background-color: $primary1;
+		width: 100%;
+		height: 40px;
+		color: $primary8;
+		font-size: 18px;
+		font-family: $ComfortaaL;
+		border-radius: 20px;
+		border: 0;
+		padding: 0 20px;
+	}
+}
+/**/
+
+/*header*/
+.b-header{
+	background-color: $primary3;
+	position: fixed;
+	top: 0;
+	z-index: 1000;
+	width: 100%;
+	height: 70px;
+	max-width: 1500px;
+	min-width: 320px;
+	padding:0 20px;
+	&__inner{
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		@include row;
+		height: 100%;
+	}
+	&__logo{
+		width: 55px;
+		display: block;
+		text-decoration: none;
+	}
+	&__phone{
+		position: relative;
+		padding-left: 70px;
+		&:before{
+			content: '';
+			position: absolute;
+			top: 50%;
+			left: 30px;
+			margin-top: -16px;
+			background-image: url("../img/phone.svg");
+			width: 21px;
+			height: 32px;
+			fill: $primary1;
+		}
+		&:after{
+			content: '';
+			position: absolute;
+			top: 50%;
+			left: 0;
+			margin-top: -16px;
+			border-left:1px dotted $primary1;
+			width: 1px;
+			height: 32px;
+		}
+		a{
+			color: $primary1;
+			text-transform: uppercase;
+			text-decoration: none;
+		}
+	}
+}
+/**/
+
+/*nav*/
+.b-nav{
+	&__item{
+		color: $primary1;
+		font-size: 16px;
+		text-transform: uppercase;
+		text-decoration: none;
+		padding: 0 8px;
+		&:hover{
+			color: $primary3;
+		}
+	}
+}
+/**/
+
+/*slider*/
+.b-slider{
+	width: 100%;
+	height: 740px;
+	max-height: 740px;
+	position: relative;
+	background-color: $primary4;
+	&:after{
+		content: '';
+		position: absolute;
+		top: 0;
+		right: 0;
+		@include gradient3
+		max-width: 381px;
+		width: 100%;
+		height: 100%;
+	}
+	&__item{
+		width: 100%;
+		height: inherit;
+		position: relative;
+	}
+	&__img{
+		width: 100%;
+		height: 740px;
+		background-size: cover;
+		position: relative;
+		opacity:.5;
+		z-index: 10;
+	}
+	&__caption{
+		@include row;
+		position: absolute;
+		top: 220px;
+		left: 0;
+		right: 0;
+		color: $primary1;
+		z-index: 30;
+		p{
+			font-size: 36px;
+		}
+	}
+	&__head{
+		font-size: 70px;
+		font-family: $ComfortaaB;
+	}
+	&__title{
+		margin-top: 0;
+		margin-bottom: 100px;
+	}
+	&__name{
+		margin: 0 0 10px;
+	}
+}
+/**/
+
+/*special offer*/
+.b-special-offer{
+	width: 100%;
+	background-image: url("../img/spec-bg.png");
+	height: 572px;
+	overflow: hidden;
+	position: relative;
+	top: -20px;
+	padding: 40px 0;
+	z-index: 10;
+	&__header{
+		text-align: center;
+		margin: 30px 0;
+		color: $primary4;
+		font-size: 30px;
+		font-family: $ComfortaaL;
+		text-transform: uppercase;
+
+		position: relative;
+		span{
+			padding-left: 60px;
+			position: relative;
+			&:before{
+				content: '';
+				position: absolute;
+				top: 50%;
+				left: 0;
+				margin-top: -20px;
+				background-image: url("../img/special-offer-i.svg");
+				background-repeat: no-repeat;
+				width: 40px;
+				height: 40px;
+			}
+		}
+	}
+	&__inner{
+		@include row;
+		@include flex;
+	}
+	&__item{
+		width: 50%;
+		height: 100%;
+		max-height: 533px;
+		&_time{
+			background-color: $primary6;
+			border-radius: 20px 0 0 20px;
+			padding: 40px;
+			p{
+				color: $primary5;
+				font-size: 20px;
+				span{
+					color: $primary3;
+					font-size: 24px;
+				}
+				i{
+					text-transform: uppercase;
+					font-family: $ComfortaaB;
+				}
+			}
+			mark {
+				background-color: $primary3;
+				color: $primary1;
+			}
+		}
+		&_form{
+			padding: 30px 50px 30px 80px;
+			@include gradient2;
+			border-radius: 0 20px 20px 0;
+		}
+	}
+}
+/**/
+
+/*reviews*/
+.b-reviews{
+	width: 100%;
+	background-color: $primary1;
+	background-image: url("../img/reviews-i.svg");
+	background-repeat: no-repeat;
+	&__header{
+		text-align: center;
+		margin: 30px 0;
+		color: $primary4;
+		font-size: 30px;
+		font-family: $ComfortaaL;
+		text-transform: uppercase;
+
+		position: relative;
+		span{
+			padding-left: 60px;
+			position: relative;
+			&:before{
+				content: '';
+				position: absolute;
+				top: 50%;
+				left: 0;
+				margin-top: -20px;
+				background-image: url("../img/special-offer-i.svg");
+				background-repeat: no-repeat;
+				width: 40px;
+				height: 40px;
+			}
+		}
+	}
+}
+/**/
+
+/*footer*/
+.b-footer{
+	width: 100%;
+	height: 315px;
+	color: $primary1;
+	font-size: 24px;
+	position: relative;
+	overflow: hidden;
+	&__map{
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		margin: 0 auto;
+		width: 100%;
+		height: 100%;
+		text-align: center;
+	}
+	&__caption{
+		position: relative;
+		width: 100%;
+		height:inherit;
+		background-color: $primary3;
+	}
+	&__contacts{
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		li{
+			padding-left: 10px;
+			margin-bottom: 15px;
+		}
+		.adress{
+			background-image: url("../img/adress.png");
+			background-repeat: no-repeat;
+			margin-right: 30px;
+			display: inline-block;
+			vertical-align:middle;
+			width: 21px;
+			height: 32px;
+		}
+		.phone{
+			background-image: url("../img/phone.png");
+			background-repeat: no-repeat;
+			margin-right: 30px;
+			display: inline-block;
+			vertical-align:middle;
+			width: 27px;
+			height: 25px;
+		}
+		.email{
+			background-image: url("../img/email.png");
+			background-repeat: no-repeat;
+			margin-right: 30px;
+			display: inline-block;
+			vertical-align:middle;
+			width:33px;
+			height:24px;
+		}
+		.insta{
+			background-image: url("../img/insta.png");
+			background-repeat: no-repeat;
+			margin-right: 30px;
+			display: inline-block;
+			vertical-align:middle;
+			width: 28px;
+			height: 29px;
+		}
+		a{
+			color: $primary1;
+			font-size: 18px;
+			font-family: $ComfortaaB;
+			text-decoration: none;
+		}
+	}
+	&__inner{
+		@include row;
+		@include flex;
+		height: 100%;
+		align-items: flex-start;
+		padding-top: 50px;
+	}
+	&__head{
+		color: $primary1;
+		font-size: 30px;
+		font-family: $ComfortaaB;
+		text-transform: uppercase;
+		margin-bottom: 30px;
+	}
+
+}
+/**/
+
+/*footer-line*/
+.b-footer-line{
+	background-color: $primary5;
+	width: 100%;
+	height: 48px;
+	color: $primary1;
+	font-size: 18px;
+	font-family: $ComfortaaL;
+	a{
+		text-decoration: none;
+		color: inherit;
+	}
+	&__inner{
+		@include row;
+		@include flex;
+		height: 100%;
+	}
+}
+/**/
+
+/*subscription*/
+.b-subscription{
+	position: relative;
+	max-width: 350px;
+	width: 100%;
+	&__head{
+		color: $primary1;
+		font-size: 30px;
+		font-family: $ComfortaaB;
+		text-transform: uppercase;
+		margin-bottom: 30px;
+	}
+	&__title{
+		color: $primary1;
+		font-size: 16px;
+		font-family: $ComfortaaB;
+		margin-bottom: 10px;
+	}
+	&__inner{
+		position: relative;
+	}
+	.input-style{
+		background-color: $primary1;
+		width: 100%;
+		height: 40px;
+		color: $primary8;
+		font-size: 18px;
+		font-family: $ComfortaaL;
+		border-radius: 20px;
+		border: 0;
+		padding: 0 10px;
+	}
+
+}
+/**/
