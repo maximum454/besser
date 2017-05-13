@@ -8,14 +8,24 @@
     <title>Главная</title>
 </head>
 <body>
-    <div class="wrp">
-        //= template/header.html
-        //= template/panel.html
-        //= template/slider.html
+<div class="wrp">
+    //= template/header.html
+    //= template/panel.html
+
+    //= template/breadcrumb.html
 
 
-    </div>
-    //= template/footer.html
+    <main class="b-main">
+            //= template/aside-left.html
+            <div class="b-content">
+                //= template/catalog.html
+            </div>
+    </main>
+
+    <div class="wrp__buffer"></div>
+</div>
+
+//= template/footer.html
 
 <link rel="stylesheet" href="css/main.css">
 <script src="js/main.js"></script>

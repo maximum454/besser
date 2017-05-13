@@ -10,12 +10,16 @@ html, body{
 	height: 100%;
 	font-family: $ProximaNovaR;
 	font-size: 16px;
+	background-image: url("../img/bg.jpg");
 }
 b{
 	font-family: $ProximaNovaB;
 }
 /**/
 .wrp{
+	position: relative;
+	width: 100%;
+	min-height: 100%;
 	img{
 		max-width: 100%;
 		display: block;
@@ -26,6 +30,9 @@ b{
 			display: table;
 			clear: both;
 		}
+	}
+	&__buffer{
+		height: 70px;
 	}
 }
 /**/
@@ -54,7 +61,7 @@ b{
 	text-align: center;
 	display: block;
 	border-radius: 20px;
-	padding: 10px 13px;
+	padding: 12px 13px;
 	margin: 0;
 	border: 0;
 	position: relative;
@@ -63,12 +70,15 @@ b{
 		background-color: $primary5;
 		text-transform: uppercase;
 		position: relative;
-		padding-left: 29px;
+		padding-left: 38px;
 		font-size: 14px;
+		letter-spacing: .7px;
+		line-height: 15px;
+		box-shadow: 0 10px 18px -5px $primary4;
 		&:before{
 			content: '';
 			position: absolute;
-			left: 9px;
+			left: 13px;
 			top: 50%;
 			margin-top: -9px;
 			background-image: url("../img/phone-i.png");
@@ -81,11 +91,14 @@ b{
 		background-color: transparent;
 		border: 1px solid $primary1;
 		text-transform: uppercase;
-		padding-left: 29px;
+		padding-left: 42px;
+		font-size: 14px;
+		letter-spacing: .7px;
+		line-height: 15px;
 		&:before{
 			content: '';
 			position: absolute;
-			left: 9px;
+			left: 24px;
 			top: 50%;
 			margin-top: -8px;
 			background-image: url("../img/map-i.png");
@@ -104,9 +117,9 @@ b{
 /*header*/
 .b-header{
 	background-color: $primary1;
-	position: fixed;
+	position: relative;
 	top: 0;
-	z-index: 1000;
+	z-index: 100;
 	width: 100%;
 	height: 70px;
 	min-width: 320px;
@@ -130,10 +143,11 @@ b{
 	}
 	&__item{
 		color: $primary3;
-		font-size: 16px;
+		font-size: 14px;
 		text-transform: uppercase;
 		text-decoration: none;
-		padding: 0 8px;
+		letter-spacing: .6px;
+		margin-right: 30px;
 		&:hover{
 			color: $primary3;
 		}
@@ -141,8 +155,44 @@ b{
 }
 /**/
 
+/*panel*/
+.b-panel{
+	background-color: $primary1;
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: 50;
+	width: 60px;
+	height: 100%;
+	&_inner{
+		background-color: transparent;
+	}
+	&__menu{
+		margin: 80px 0 0;
+		padding: 0;
+		list-style: none;
+	}
+	&__menu-item{
+		display: block;
+		margin-bottom: 20px;
+		img{
+			margin: 0 auto;
+		}
+	}
+}
+/**/
+
 /*slider*/
 .b-slider{
+	position: relative;
+	width: 100%;
+	height: calc(100vh - 70px);
+	overflow: hidden;
+	&__item{
+		width: 100%;
+		height: 100vh;
+		background-size: cover;
+	}
 }
 /**/
 
@@ -151,11 +201,129 @@ b{
 	background-color: $primary4;
 	position: fixed;
 	bottom: 0;
-	z-index: 1000;
+	z-index: 100;
 	width: 100%;
 	height: 70px;
 	min-width: 320px;
 	padding: 0 20px;
 	@include flex;
+	&_inner{
+		background-color: $primary5;
+		position: relative;
+		margin-top: -70px;
+	}
 }
 /**/
+
+/*content*/
+.b-main{
+	@include row;
+	@include flex;
+	justify-content: flex-start;
+	align-items: flex-start;
+}
+/**/
+
+/*aside-left*/
+.b-aside-left{
+	background-image: url("../img/aside-bg.jpg");
+	width: 255px;
+	padding: 26px 30px;
+	margin-right: 30px;
+	margin-bottom: 20px;
+	box-shadow: 0 10px 30px -5px $primary4;
+	&__item{
+		display: block;
+		margin-bottom: 45px;
+		color: $primary1;
+		font-size: 18px;
+		font-family: $ProximaNovaR;
+		text-transform: uppercase;
+		text-decoration: none;
+		letter-spacing: .8px;
+		&:last-child{
+			margin-bottom: 0;
+		}
+	}
+}
+/**/
+
+/*breadcrumb*/
+.b-breadcrumb{
+	@include row;
+	margin: 44px auto 35px;
+	color: $primary3;
+	font-size: 30px;
+	font-family: $ProximaNovaR;
+	letter-spacing: .6px;
+	&__item{
+		color: $primary3;
+		font-size: 30px;
+		font-family: $ProximaNovaR;
+		letter-spacing: 1.4px;
+		text-transform: uppercase;
+		text-decoration: none;
+		&:first-child{
+			font-family: $ProximaNovaB;
+		}
+	}
+}
+/**/
+
+/*content*/
+.b-content{
+
+}
+/**/
+
+/*catalog*/
+.b-catalog{
+	position: relative;
+	margin-bottom: 60px;
+	&__head{
+		color: $primary3;
+		font-size: 24px;
+		margin-bottom: 15px;
+		letter-spacing: 1.4px;
+	}
+	&__inner{
+		@include flex;
+		align-items: flex-start;
+		flex-wrap: wrap;
+		width: 810px;
+	}
+	&__item{
+		background-color: $primary1;
+		width: 270px;
+		padding: 30px 30px 26px;
+		border: 1px solid $primary7;
+		position: relative;
+		&:hover{
+			box-shadow: 0 0 30px -5px $primary6;
+			z-index: 10;
+		}
+	}
+	&__img{
+		margin-bottom: 27px;
+	}
+	&__txt{
+
+	}
+	&__name{
+		color: $primary5;
+		font-family: $ProximaNovaB;
+		margin-bottom: 6px;
+	}
+	&__size, &__city{
+		color: $primary6;
+		font-family: $ProximaNovaR;
+		margin-bottom: 6px;
+	}
+	&__price{
+		color: $primary3;
+		font-family: $ProximaNovaB;
+		margin-top: 30px;
+	}
+}
+/**/
+
