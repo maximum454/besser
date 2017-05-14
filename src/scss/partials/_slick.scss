@@ -205,8 +205,7 @@ $slick-opacity-not-active: 0.25 !default;
         margin: 40px auto;
         padding: 0;
         cursor: pointer;
-        background-image: url("../img/slick-dots.png");
-        background-position: 0 0;
+
         button {
             border: 0;
             background: transparent;
@@ -224,8 +223,7 @@ $slick-opacity-not-active: 0.25 !default;
             }
         }
         &.slick-active{
-            background-image: url("../img/slick-dots.png");
-            background-position: 0 -32px;
+
         }
     }
 }

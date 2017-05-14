@@ -22,7 +22,7 @@
                     <a class="b-nav__item" href="#">КОНТАКТЫ</a>
                 </nav>
         
-                <a href="#" class="b-btn b-btn_header">Заказать звонок</a>
+                <a href="#" class="b-btn b-btn_header popap_box" data-body="call">Заказать звонок</a>
         </header>
         <div class="b-panel b-panel_inner">
             <ul class="b-panel__menu">
@@ -38,9 +38,27 @@
             </ul>
         </div>
         <div class="b-slider js-slider">
-            <div class="b-slider__item" style="background-image: url('img/slider-img.png')"></div>
-            <div class="b-slider__item" style="background-image: url('img/slider-img.png')"></div>
-            <div class="b-slider__item" style="background-image: url('img/slider-img.png')"></div>
+            <div class="b-slider__item" style="background-image: url('img/slider-img.png')">
+                <div class="b-slider__caption">
+                    <div class="b-slider__head">ШИРОКИЙ ВЫБОР НАПОЛЬНЫХ ПОКРЫТИЙ</div>
+                    <div class="b-slider__title">ПО ЛУЧШИМ ЦЕНАМ</div>
+                    <a href="#" class="b-btn b-btn_slider-catalog">СМОТРЕТЬ КАТАЛОГ</a> <a href="#" class="b-btn b-btn_slider-consult">КОНСУЛЬТАЦИЯ</a>
+                </div>
+            </div>
+            <div class="b-slider__item" style="background-image: url('img/slider-img.png')">
+                <div class="b-slider__caption">
+                    <div class="b-slider__head">ШИРОКИЙ ВЫБОР НАПОЛЬНЫХ ПОКРЫТИЙ</div>
+                    <div class="b-slider__title">ПО ЛУЧШИМ ЦЕНАМ</div>
+                    <a href="#" class="b-btn b-btn_slider-catalog">СМОТРЕТЬ КАТАЛОГ</a> <a href="#" class="b-btn b-btn_slider-consult">КОНСУЛЬТАЦИЯ</a>
+                </div>
+            </div>
+            <div class="b-slider__item" style="background-image: url('img/slider-img.png')">
+                <div class="b-slider__caption">
+                    <div class="b-slider__head">ШИРОКИЙ ВЫБОР НАПОЛЬНЫХ ПОКРЫТИЙ</div>
+                    <div class="b-slider__title">ПО ЛУЧШИМ ЦЕНАМ</div>
+                    <a href="#" class="b-btn b-btn_slider-catalog">СМОТРЕТЬ КАТАЛОГ</a> <a href="#" class="b-btn b-btn_slider-consult">КОНСУЛЬТАЦИЯ</a>
+                </div>
+            </div>
         </div>
 
 
@@ -55,7 +73,24 @@
     
         <a href="#" class="b-btn b-btn_footer">КАРТА ПРОЕЗДА</a>
     </footer>
-
+    <div class="hidden">
+        <div id="modalbox_call" class="b-modal">
+            <form action="" class="b-form-popup">
+                <div class="arcticmodal-close">закрыть</div>
+                <div class="b-form-popup__head">ОБРАТНАЯ СВЯЗЬ</div>
+                <div class="b-form-popup__item">
+                    <input type="text" class="input-style" placeholder="Введите ваше имя*">
+                </div>
+                <div class="b-form-popup__item">
+                    <input type="text" class="input-style" placeholder="Контактный телефон*">
+                </div>
+                <div class="b-form-popup__item">
+                    <input type="text" class="input-style" placeholder="Электронная почта">
+                </div>
+                <input type="submit" class="b-btn b-btn_popup" value="ОТПРАВИТЬ">
+            </form>
+        </div>
+    </div>
 <link rel="stylesheet" href="css/main.css">
 <script src="js/main.js"></script>
 </body>

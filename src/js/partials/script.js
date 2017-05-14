@@ -17,6 +17,7 @@ $(function () {
     });
     /**/
 
+    /*скрипт кнопка верх*/
     $(window).scroll(function() {
         if($(this).scrollTop() != 0) {
             $('.js-top').fadeIn();
@@ -25,7 +26,13 @@ $(function () {
         }
     });
 
+
     $('.js-top').click(function() {
         $('body,html').animate({scrollTop:0},800);
+    });
+
+    /*Скрипт для модальных окон*/
+    $('.popap_box').click(function() {
+        $('#modalbox_' + $(this).data('body')).arcticmodal();
     });
 });
