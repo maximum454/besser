@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Главная</title>
+</head>
+<body>
+    <div class="wrp">
+        <header class="b-header">
+                <a href="/" class="b-header__logo">
+                    <img src="../img/logo.png" alt="">
+                </a>
+                
+                <div class="mb-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <nav class="b-nav">
+                    <a class="b-nav__item" href="#">ГЛАВНАЯ</a>
+                    <a class="b-nav__item" href="#">О КОМПАНИИ</a>
+                    <a class="b-nav__item" href="#">КАТАЛОГ ПРОДУКЦИИ</a>
+                    <a class="b-nav__item" href="#">НОВОСТИ</a>
+                    <a class="b-nav__item" href="#">КОНТАКТЫ</a>
+                </nav>
+                <div class="stone-b clearfix"></div>
+                <a href="#" class="b-btn b-btn_header popap_box" data-body="call">Заказать звонок</a>
+        
+                <div class="b-panel b-panel_inner">
+                    <ul class="b-panel__menu">
+                        <li class="b-panel__menu-item">
+                            <a href="#"><img src="img/search-i.png" alt=""></a>
+                        </li>
+                        <li class="b-panel__menu-item">
+                            <a href="#"><img src="img/email-i.png" alt=""></a>
+                        </li>
+                        <li class="b-panel__menu-item">
+                            <a href="#"><img src="img/catalog-i.png" alt=""></a>
+                        </li>
+                    </ul>
+                </div>
+        </header>
+        <div class="b-panel b-panel_inner">
+            <ul class="b-panel__menu">
+                <li class="b-panel__menu-item">
+                    <a href="#"><img src="img/search-i.png" alt=""></a>
+                </li>
+                <li class="b-panel__menu-item">
+                    <a href="#"><img src="img/email-i.png" alt=""></a>
+                </li>
+                <li class="b-panel__menu-item">
+                    <a href="#"><img src="img/catalog-i.png" alt=""></a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="b-card__slider">
+            <div class="b-slider card__slider">
+                <div class="b-slider__item" style="background-image: url(img/card01.jpg)"></div>
+                <div class="b-slider__item" style="background-image: url(img/card01.jpg)"></div>
+                <div class="b-slider__item" style="background-image: url(img/card01.jpg)"></div>
+            </div>
+        </div>
+        
+        <div class="b-card__info">
+            <h2>Ламинат Alloc 5453, Бук Элегант</h2>
+
+            <div class="card__price">
+                цена: <span> 3500 тенге/м<sup>2</sup></span>
+            </div>
+
+            <div class="card__calc">
+                <p>Введите метраж вашего помещения</p>
+
+                <div data-trigger="spinner" id="spinner">
+                  <a href="javascript:;" data-spin="down">-</a>
+                  <input type="text" value="1" data-rule="quantity">
+                  <a href="javascript:;" data-spin="up">+</a>
+                </div>
+            </div>
+
+            <div class="card__price card__price-itog">
+                итого: <span><i id="spinner-value" data-price="3500"> 3500</i> тенге</span>
+            </div>
+
+            <a href="#" class="b-btn b-btn_header">ХОЧУ КУПИТЬ</a>
+
+            <div class="b-card-char">
+                <div class="title">ХАРАКТЕРИСТИКИ</div>
+
+                <ul class="list char__list">
+                    <li>
+                        <span class="ch-title">Бренд:</span>
+                        <span class="ch-d"><i></i></span>
+                        <span class="ch-name">Alloc</span>
+                    </li>
+                    <li>
+                        <span class="ch-title">Класс нагрузки:</span>
+                        <span class="ch-d"><i></i></span>
+                        <span class="ch-name">34</span>
+                    </li>
+                    <li>
+                        <span class="ch-title">Порода дерева:</span>
+                        <span class="ch-d"><i></i></span>
+                        <span class="ch-name">Бук</span>
+                    </li>
+                    <li>
+                        <span class="ch-title">Соединение:</span>
+                        <span class="ch-d"><i></i></span>
+                        <span class="ch-name">Замковое</span>
+                    </li>
+                    <li>
+                        <span class="ch-title">Фаска:</span>
+                        <span class="ch-d"><i></i></span>
+                        <span class="ch-name">Нет</span>
+                    </li>
+                    <li>
+                        <span class="ch-title">Подложка:</span>
+                        <span class="ch-d"><i></i></span>
+                        <span class="ch-name">Есть</span>
+                    </li>
+                    <li>
+                        <span class="ch-title">Страна производства:</span>
+                        <span class="ch-d"><i></i></span>
+                        <span class="ch-name">Норвегия</span>
+                    </li>
+                    <li>
+                        <span class="ch-title">Толщина (мм):</span>
+                        <span class="ch-d"><i></i></span>
+                        <span class="ch-name">11</span>
+                    </li>
+                    <li>
+                        <span class="ch-title">Ширина (мм):</span>
+                        <span class="ch-d"><i></i></span>
+                        <span class="ch-name">193</span>
+                    </li>
+                    <li>
+                        <span class="ch-title">Длина (мм):</span>
+                        <span class="ch-d"><i></i></span>
+                        <span class="ch-name">120</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <footer class="b-footer b-footer_inner">
+        <nav class="b-nav b-nav_footer">
+            <a class="b-nav__item" href="#">КАТАЛОГ ПРОДУКЦИИ</a>
+            <a class="b-nav__item" href="#">АКЦИИ И ПРЕДЛОЖЕНИЯ</a>
+            <a class="b-nav__item" href="#">ДЛЯ ПАРТНЕРОВ</a>
+            <a class="b-nav__item" href="#">ОПТОВЫМ ПОКУПАТЕЛЯМ</a>
+        </nav>
+    
+        <a href="#" class="b-btn b-btn_footer">КАРТА ПРОЕЗДА</a>
+    </footer>
+    <div class="hidden">
+        <div id="modalbox_call" class="b-modal">
+            <form action="" class="b-form-popup">
+                <div class="arcticmodal-close">закрыть</div>
+                <div class="b-form-popup__head">ОБРАТНАЯ СВЯЗЬ</div>
+                <div class="b-form-popup__item">
+                    <input type="text" class="input-style" placeholder="Введите ваше имя*">
+                </div>
+                <div class="b-form-popup__item">
+                    <input type="text" class="input-style" placeholder="Контактный телефон*">
+                </div>
+                <div class="b-form-popup__item">
+                    <input type="text" class="input-style" placeholder="Электронная почта">
+                </div>
+                <input type="submit" class="b-btn b-btn_popup" value="ОТПРАВИТЬ">
+            </form>
+        </div>
+    </div>
+<link rel="stylesheet" href="css/main.css">
+<script src="js/main.js"></script>
+</body>
+</html>
