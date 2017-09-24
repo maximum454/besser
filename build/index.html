@@ -2,19 +2,22 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Главная</title>
 </head>
-<body>
+<body class="main-styler">
     <div class="wrp">
-
         <header class="b-header">
                 <a href="/" class="b-header__logo">
                     <img src="../img/logo.png" alt="">
                 </a>
-        
+                
+                <div class="mb-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
                 <nav class="b-nav">
                     <a class="b-nav__item" href="#">ГЛАВНАЯ</a>
                     <a class="b-nav__item" href="#">О КОМПАНИИ</a>
@@ -22,10 +25,24 @@
                     <a class="b-nav__item" href="#">НОВОСТИ</a>
                     <a class="b-nav__item" href="#">КОНТАКТЫ</a>
                 </nav>
-        
+                <div class="stone-b clearfix"></div>
                 <a href="#" class="b-btn b-btn_header popap_box" data-body="call">Заказать звонок</a>
+        
+                <div class="b-panel b-panel_inner">
+                    <ul class="b-panel__menu">
+                        <li class="b-panel__menu-item">
+                            <a href="#"><img src="img/search-i.png" alt=""></a>
+                        </li>
+                        <li class="b-panel__menu-item">
+                            <a href="#"><img src="img/email-i.png" alt=""></a>
+                        </li>
+                        <li class="b-panel__menu-item">
+                            <a href="#"><img src="img/catalog-i.png" alt=""></a>
+                        </li>
+                    </ul>
+                </div>
         </header>
-        <div class="b-panel">
+        <div class="b-panel b-panel_inner">
             <ul class="b-panel__menu">
                 <li class="b-panel__menu-item">
                     <a href="#"><img src="img/search-i.png" alt=""></a>
@@ -55,7 +72,7 @@
             </div>
             <div class="b-slider__item" style="background-image: url('img/slider-img.png')">
                 <div class="b-slider__caption">
-                    <div class="b-slider__h ead">ШИРОКИЙ ВЫБОР НАПОЛЬНЫХ ПОКРЫТИЙ</div>
+                    <div class="b-slider__head">ШИРОКИЙ ВЫБОР НАПОЛЬНЫХ ПОКРЫТИЙ</div>
                     <div class="b-slider__title">ПО ЛУЧШИМ ЦЕНАМ</div>
                     <a href="#" class="b-btn b-btn_slider-catalog">СМОТРЕТЬ КАТАЛОГ</a> <a href="#" class="b-btn b-btn_slider-consult">КОНСУЛЬТАЦИЯ</a>
                 </div>
