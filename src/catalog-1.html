@@ -2,8 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Главная</title>
 </head>
@@ -12,17 +11,26 @@
     //= template/header.html
     //= template/panel.html
 
-    //= template/breadcrumb.html
 
-
-    <main class="b-main">
-        <aside class="b-aside-left">
-            //= template/nav-catalog.html
-        </aside>
-        <div class="b-content">
-            //= template/catalog.html
-        </div>
-    </main>
+    <div class="container">
+        <main class="">
+            <div class="b-breadcrumb">
+                <a class="b-breadcrumb__item" href="#">КАТАЛОГ ПРОДУКЦИИ</a> / <a class="b-breadcrumb__item" href="#">ЛАМИНАТ</a>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-4">
+                    <aside class="b-aside-left">
+                        //= template/nav-catalog.html
+                    </aside>
+                </div>
+                <div class="col-lg-9 col-md-8">
+                    <div class="b-content">
+                        //= template/catalog.html
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
 
     <div class="wrp__buffer"></div>
 </div>
