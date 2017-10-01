@@ -19,7 +19,7 @@ html, body{
 b{
 	font-family: $ProximaNovaB;
 }
-h1, h2, h3, h4, h5, h6 {font-family: ProximaNova-Bold; font-weight: normal;}
+h1, h2, h3, h4, h5, h6 {font-family: $ProximaNovaB; font-weight: normal;}
 
 /*модальное окна*/
 .arcticmodal-overlay,
@@ -1186,7 +1186,7 @@ h1, h2, h3, h4, h5, h6 {font-family: ProximaNova-Bold; font-weight: normal;}
     text-transform: uppercase;
     font-size: 18px;
     color: #61270a;
-    font-family: ProximaNova-Bold;
+    font-family: $ProximaNovaB;
     margin-top: 0;
   }
   p {
@@ -1261,7 +1261,7 @@ h1, h2, h3, h4, h5, h6 {font-family: ProximaNova-Bold; font-weight: normal;}
   line-height: 40px;
   font-size: 18px;
   color: #37474f;
-  font-family: ProximaNova-Bold;
+  font-family: $ProximaNovaB;
   text-decoration: none;
 
   &:hover,&.act {
@@ -1378,7 +1378,7 @@ h1, h2, h3, h4, h5, h6 {font-family: ProximaNova-Bold; font-weight: normal;}
     font-size: 18px;
     color: #61270a;
     margin-bottom: 15px;
-    font-family: ProximaNova-Bold;
+    font-family: $ProximaNovaB;
     padding-left: 30px;
   }
   p {
