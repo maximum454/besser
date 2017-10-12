@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Главная</title>
+</head>
+<body>
+    <div class="wrp">
+        //= template/header.html
+        //= template/panel.html
+
+        <div class="b-card__slider">
+            <div class="b-slider card__slider">
+                <div class="b-slider__item" style="background-image: url(img/card01.jpg)"></div>
+                <div class="b-slider__item" style="background-image: url(img/card01.jpg)"></div>
+                <div class="b-slider__item" style="background-image: url(img/card01.jpg)"></div>
+            </div>
+        </div>
+        
+        <div class="b-card__info">
+            <h2>Ламинат Alloc 5453, Бук Элегант</h2>
+
+            <div class="card__price">
+                цена: <span> 3500 тенге/м<sup>2</sup></span>
+            </div>
+
+            <div class="card__calc">
+                <p>Введите метраж вашего помещения</p>
+
+                <div data-trigger="spinner" id="spinner">
+                  <a href="javascript:;" data-spin="down">-</a>
+                  <input type="text" value="1" data-rule="quantity">
+                  <a href="javascript:;" data-spin="up">+</a>
+                </div>
+            </div>
+
+            <div class="card__price card__price-itog">
+                итого: <span><i id="spinner-value" data-price="3500"> 3500</i> тенге</span>
+            </div>
+
+            <a href="#" class="b-btn b-btn_header">ХОЧУ КУПИТЬ</a>
+
+            <div class="b-card-char">
+                <div class="title">ХАРАКТЕРИСТИКИ</div>
+
+                <ul class="list char__list">
+                    <li>
+                        <span class="ch-title">Бренд:</span>
+                        <span class="ch-d"><i></i></span>
+                        <span class="ch-name">Alloc</span>
+                    </li>
+                    <li>
+                        <span class="ch-title">Класс нагрузки:</span>
+                        <span class="ch-d"><i></i></span>
+                        <span class="ch-name">34</span>
+                    </li>
+                    <li>
+                        <span class="ch-title">Порода дерева:</span>
+                        <span class="ch-d"><i></i></span>
+                        <span class="ch-name">Бук</span>
+                    </li>
+                    <li>
+                        <span class="ch-title">Соединение:</span>
+                        <span class="ch-d"><i></i></span>
+                        <span class="ch-name">Замковое</span>
+                    </li>
+                    <li>
+                        <span class="ch-title">Фаска:</span>
+                        <span class="ch-d"><i></i></span>
+                        <span class="ch-name">Нет</span>
+                    </li>
+                    <li>
+                        <span class="ch-title">Подложка:</span>
+                        <span class="ch-d"><i></i></span>
+                        <span class="ch-name">Есть</span>
+                    </li>
+                    <li>
+                        <span class="ch-title">Страна производства:</span>
+                        <span class="ch-d"><i></i></span>
+                        <span class="ch-name">Норвегия</span>
+                    </li>
+                    <li>
+                        <span class="ch-title">Толщина (мм):</span>
+                        <span class="ch-d"><i></i></span>
+                        <span class="ch-name">11</span>
+                    </li>
+                    <li>
+                        <span class="ch-title">Ширина (мм):</span>
+                        <span class="ch-d"><i></i></span>
+                        <span class="ch-name">193</span>
+                    </li>
+                    <li>
+                        <span class="ch-title">Длина (мм):</span>
+                        <span class="ch-d"><i></i></span>
+                        <span class="ch-name">120</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    //= template/footer.html
+    //= template/popup.html
+<link rel="stylesheet" href="css/main.css">
+<script src="js/main.js"></script>
+</body>
+</html>
