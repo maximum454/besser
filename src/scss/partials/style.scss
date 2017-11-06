@@ -327,7 +327,7 @@ h1, h2, h3, h4, h5, h6 {font-family: $ProximaNovaB; font-weight: normal;}
 	box-shadow: 0 10px 30px -5px $primary4;
 	&__item{
 		display: block;
-		margin-bottom: 45px;
+		margin-bottom: 25px;
 		color: $primary1;
 		font-size: 18px;
 		font-family: $ProximaNovaR;
@@ -1138,19 +1138,19 @@ h1, h2, h3, h4, h5, h6 {font-family: $ProximaNovaB; font-weight: normal;}
 
 .char__list {
 	li {
-			display: table;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
 			width: 100%;
 			margin-bottom: 10px;
 	}
 
 	 span {
-			display: table-cell;
 			i {
 				width: 100%;
 				display: block;
 				border-bottom: 1px dotted #90989c;
 				position: relative;
-				top: -4px;
 			}
 	 }
 }
@@ -1174,6 +1174,7 @@ h1, h2, h3, h4, h5, h6 {font-family: $ProximaNovaB; font-weight: normal;}
 	font-size: 14px;
 	color: #ae672d;
 	padding-left: 10px;
+	flex-shrink: 0;
 }
 //NEWS
 .news-date-el {
