@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Главная</title>
+    <title>Карта</title>
 </head>
 <body>
     <div class="wrp">
@@ -29,10 +29,46 @@
             <div class="card__calc">
                 <p>Введите метраж вашего помещения</p>
 
-                <div data-trigger="spinner" id="spinner">
-                  <a href="javascript:;" data-spin="down">-</a>
-                  <input type="text" value="1" data-rule="quantity">
-                  <a href="javascript:;" data-spin="up">+</a>
+                <!--<div data-trigger="spinner" id="spinner">-->
+                  <!--<a href="javascript:;" data-spin="down">-</a>-->
+                  <!--<input type="text" value="1" data-rule="quantity">-->
+                  <!--<a href="javascript:;" data-spin="up">+</a>-->
+                <!--</div>-->
+
+                <div class="card__inner">
+                    <div class="card__items">
+                        <div class="card__item">
+                            <label for="">Длина комнаты</label>
+                            <input type="text" class="" value="5.5">
+                        </div>
+                        <div class="card__item">
+                            <label for="">Ширина комнаты</label>
+                            <input type="text" value="3.5">
+                        </div>
+                    </div>
+                    <div class="card__items">
+                        <div class="card__item">
+                            <label for="">Длина доски</label>
+                            <input type="text"  disabled="disabled" value="1380">
+                        </div>
+                        <div class="card__item">
+                            <label for="">Ширина доски</label>
+                            <input type="text" disabled="disabled" value="156">
+                        </div>
+                    </div>
+                    <div class="card__items">
+                        <div class="card__item">
+                            <label for="">Число досок<br>в упаковке </label>
+                            <input type="text"  disabled="disabled" value="8">
+                        </div>
+                        <div class="card__item">
+                            <label for="">Укладка по</label>
+                            <select class="card__select" name="" id="">
+                                <option value="">Длине</option>
+                                <option value="">Ширине</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
 

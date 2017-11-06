@@ -6,6 +6,8 @@ $(function () {
     })
     /**/
 
+
+
     /*slider*/
     $('.js-slider').slick({
         dots: true,
@@ -141,4 +143,5 @@ $(function () {
         $(".mb-menu").click(function(){
             $('body').toggleClass("active");
         });
+
 });
