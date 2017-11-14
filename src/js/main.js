@@ -12,5 +12,5 @@
 //= partials/jquery.formstyler.js
 //= partials/jquery.arcticmodal-0.3.min.js
 //= partials/owl.carousel.min.js
-
+//= partials/cal.js
 //= partials/script.js

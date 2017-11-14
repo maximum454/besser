@@ -6,8 +6,6 @@ $(function () {
     })
     /**/
 
-
-
     /*slider*/
     $('.js-slider').slick({
         dots: true,

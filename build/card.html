@@ -68,7 +68,7 @@
             <h2>Ламинат Alloc 5453, Бук Элегант</h2>
 
             <div class="card__price">
-                цена: <span> 3500 тенге/м<sup>2</sup></span>
+                цена: <span> <span id="lprice">3500</span> тенге/м<sup>2</sup></span>
             </div>
 
             <div class="card__calc">
@@ -81,30 +81,31 @@
                 <!--</div>-->
 
                 <div class="card__inner">
-                    <div class="card__items">
-                        <div class="card__item">
-                            <label for="">Длина комнаты</label>
-                            <input type="text" class="" value="5.5">
+                    <form action="" class="form">
+                        <div class="card__items">
+                            <div class="card__item">
+                                <label for="">Длина комнаты</label>
+                                <input id="len-room" type="text"  value="5.5">
+                            </div>
+                            <div class="card__item">
+                                <label for="">Ширина комнаты</label>
+                                <input id="width-room" type="text" value="3.5">
+                            </div>
                         </div>
-                        <div class="card__item">
-                            <label for="">Ширина комнаты</label>
-                            <input type="text" value="3.5">
+                        <div class="card__items">
+                            <div class="card__item">
+                                <label for="">Длина доски</label>
+                                <input id="len-board" type="text"  disabled="disabled" value="1380">
+                            </div>
+                            <div class="card__item">
+                                <label for="">Ширина доски</label>
+                                <input id="width-board" type="text" disabled="disabled" value="156">
+                            </div>
                         </div>
-                    </div>
-                    <div class="card__items">
-                        <div class="card__item">
-                            <label for="">Длина доски</label>
-                            <input type="text"  disabled="disabled" value="1380">
-                        </div>
-                        <div class="card__item">
-                            <label for="">Ширина доски</label>
-                            <input type="text" disabled="disabled" value="156">
-                        </div>
-                    </div>
-                    <div class="card__items">
+                        <div class="card__items">
                         <div class="card__item">
                             <label for="">Число досок<br>в упаковке </label>
-                            <input type="text"  disabled="disabled" value="8">
+                            <input id="number-board" type="text"  disabled="disabled" value="8">
                         </div>
                         <div class="card__item">
                             <label for="">Укладка по</label>
@@ -114,6 +115,7 @@
                             </select>
                         </div>
                     </div>
+                    </form>
                 </div>
             </div>
 
