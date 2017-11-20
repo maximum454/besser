@@ -1,6 +1,4 @@
 $(document).ready(function(){
-
-
     var inputs = document.querySelectorAll('.form input');
     for (i = 0; i < inputs.length; i++) {
         inputs[i].addEventListener('keyup', function(e) {
@@ -14,8 +12,12 @@ $(document).ready(function(){
                 var formula = ((lr*lw))/(lb*wb*n);
                 var pin = Math.ceil(formula) * lprice;
                 $('#spinner-value').html(pin);
-            }else{
-
+                $('.card__price-error span').hide();
+                console.log('1');
+            } else if($('#len-room').val() == '' || $('#width-room').val() == ''){
+                $('.card__price-error span').html("Введите цифры");
+                $('.card__price-error span').show();
+                console.log('2');
             }
         });
     }
