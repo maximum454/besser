@@ -427,6 +427,7 @@ h1, h2, h3, h4, h5, h6 {font-family: $ProximaNovaB; font-weight: normal;}
 		padding: 30px 30px 26px;
 		border: 1px solid $primary7;
 		position: relative;
+		min-height: 450px;
 		&:hover{
 			box-shadow: 0 0 30px -5px $primary6;
 			z-index: 10;
