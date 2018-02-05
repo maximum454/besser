@@ -142,4 +142,8 @@ $(function () {
             $('body').toggleClass("active");
         });
 
+    $('.js-map-toggle').click(function () {
+       $('#info-container').toggle();
+    });
+
 });
