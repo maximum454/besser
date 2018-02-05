@@ -1139,6 +1139,7 @@ h1, h2, h3, h4, h5, h6 {font-family: $ProximaNovaB; font-weight: normal;}
 
 .card{
 	&__items{
+		text-decoration: none;
 		width: 100%;
 		display: flex;
 		align-items: flex-end;
@@ -1151,6 +1152,8 @@ h1, h2, h3, h4, h5, h6 {font-family: $ProximaNovaB; font-weight: normal;}
 	&__item{
 		width: 100%;
 		max-width: 98px;
+		text-decoration: none;
+		display: block;
 	}
 	&__select{
 

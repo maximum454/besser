@@ -11,6 +11,8 @@ $(function () {
         dots: true,
         arrows: true,
         infinite: true,
+        autoplay: true,
+        autoplaySpeed: 7000,
         lazyLoad: 'ondemand',
         speed: 300,
         slidesToShow: 1,
@@ -21,6 +23,8 @@ $(function () {
         dots: false,
         arrows: true,
         infinite: true,
+        autoplay: true,
+        autoplaySpeed: 7000,
         lazyLoad: 'ondemand',
         speed: 300,
         slidesToShow: 1,
@@ -126,6 +130,9 @@ $(function () {
             autoWidth: false,
             margin: 0,
             loop: true,
+            autoplay: true,
+            autoplayTimeout: 7000,
+            autoplayHoverPause: true,
             responsive: {
                 0: {
                     items: 1,
