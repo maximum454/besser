@@ -27,6 +27,14 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
 }
 
+// width
+@mixin r($width){
+  @media only screen and (max-width: $width+ "px"){
+    @content
+  }
+}
+/**/
+
 /*модальное окна*/
 .arcticmodal-overlay,
 .arcticmodal-container {
@@ -1700,6 +1708,7 @@ body.active {
   padding: 0;
 }
 
+@import "requisites";
 // dasd
 // asdasdasd
 // asddas
@@ -1782,6 +1791,7 @@ body.active {
   }
 
   .b-footer {
+    height: auto;
     .b-nav_footer {
       display: none !important;
     }
