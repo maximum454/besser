@@ -528,6 +528,21 @@ h1, h2, h3, h4, h5, h6 {
 		font-family: $ProximaNovaB;
 		margin-top: 30px;
 	}
+	&__discount{
+		position: absolute;
+		top: -23px;
+		left: -23px;
+		width: 46px;
+		height: 46px;
+		padding: 0 5px;
+		border-radius: 50%;
+		box-shadow: 0 4px 13px -3px rgba(0,0,0,.6);
+		background-color: red;
+		color: #fff;
+		font-size: 16px;
+		line-height: 46px;
+		text-align: center;
+	}
 }
 
 /**/
@@ -549,11 +564,6 @@ h1, h2, h3, h4, h5, h6 {
 		height: 20px;
 		cursor: pointer;
 	}
-}
-
-/**/
-.b-form-param__param {
-	display: none;
 }
 
 /*form-param*/
@@ -581,7 +591,9 @@ h1, h2, h3, h4, h5, h6 {
 	&__item {
 		margin-bottom: 20px;
 	}
-
+	&__param {
+		display: none;
+	}
 	.b-btn_popup {
 		font-size: 18px;
 		margin-left: 0;
