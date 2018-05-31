@@ -508,9 +508,13 @@ h1, h2, h3, h4, h5, h6 {
   &__img {
     margin-bottom: 27px;
     text-align: center;
+    height: 186px;
     position: relative;
     img {
-      display: inline;
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
     }
   }
   &__discount{
@@ -1170,7 +1174,7 @@ h1, h2, h3, h4, h5, h6 {
   .b-slider__item {
     background-repeat: no-repeat;
     background-position: center;
-    background-size: cover;
+    background-size: contain;
   }
 
   .slick-prev {
