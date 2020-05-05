@@ -8,14 +8,15 @@
 </head>
 <body class="main-styler">
     <div class="wrp">
-        //= template/header.html
-        //= template/panel.html
-        //= template/slider.html
+        @@include('./template/_header.html')
+        @@include('template/_panel.html')
+        @@include('template/_slider.html')
+
 
 
     </div>
-    //= template/footer.html
-    //= template/popup.html
+    @@include('template/_footer.html')
+    @@include('template/_popup.html')
 <link rel="stylesheet" href="css/main.css">
 <script src="js/main.js"></script>
 </body>

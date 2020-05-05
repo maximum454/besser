@@ -9,8 +9,8 @@
 </head>
 <body>
 <div class="wrp">
-    //= template/header.html
-    //= template/panel.html
+    @@include('template/_header.html')
+    @@include('template/_panel.html')
 
 
 
@@ -22,7 +22,8 @@
     <div class="wrp__buffer"></div>
 </div>
 
-//= template/footer.html
+@@include('template/_footer.html')
+@@include('template/_popup.html')
 
 <link rel="stylesheet" href="css/main.css">
 <script src="js/main.js"></script>

@@ -11,387 +11,254 @@
 /** @var string $componentPath */
 /** @var CBitrixComponent $component */
 $this->setFrameMode(true);
-$templateLibrary = array('popup');
-$currencyList = '';
-if (!empty($arResult['CURRENCIES'])) {
-    $templateLibrary[] = 'currency';
-    $currencyList = CUtil::PhpToJSObject($arResult['CURRENCIES'], false, true, true);
-}
-$templateData = array(
-    'TEMPLATE_THEME' => $this->GetFolder() . '/themes/' . $arParams['TEMPLATE_THEME'] . '/style.css',
-    'TEMPLATE_CLASS' => 'bx_' . $arParams['TEMPLATE_THEME'],
-    'TEMPLATE_LIBRARY' => $templateLibrary,
-    'CURRENCIES' => $currencyList
-);
-unset($currencyList, $templateLibrary);
-
-$strMainID = $this->GetEditAreaId($arResult['ID']);
-$arItemIDs = array(
-    'ID' => $strMainID,
-    'PICT' => $strMainID . '_pict',
-    'DISCOUNT_PICT_ID' => $strMainID . '_dsc_pict',
-    'STICKER_ID' => $strMainID . '_sticker',
-    'BIG_SLIDER_ID' => $strMainID . '_big_slider',
-    'BIG_IMG_CONT_ID' => $strMainID . '_bigimg_cont',
-    'SLIDER_CONT_ID' => $strMainID . '_slider_cont',
-    'SLIDER_LIST' => $strMainID . '_slider_list',
-    'SLIDER_LEFT' => $strMainID . '_slider_left',
-    'SLIDER_RIGHT' => $strMainID . '_slider_right',
-    'OLD_PRICE' => $strMainID . '_old_price',
-    'PRICE' => $strMainID . '_price',
-    'DISCOUNT_PRICE' => $strMainID . '_price_discount',
-    'SLIDER_CONT_OF_ID' => $strMainID . '_slider_cont_',
-    'SLIDER_LIST_OF_ID' => $strMainID . '_slider_list_',
-    'SLIDER_LEFT_OF_ID' => $strMainID . '_slider_left_',
-    'SLIDER_RIGHT_OF_ID' => $strMainID . '_slider_right_',
-    'QUANTITY' => $strMainID . '_quantity',
-    'QUANTITY_DOWN' => $strMainID . '_quant_down',
-    'QUANTITY_UP' => $strMainID . '_quant_up',
-    'QUANTITY_MEASURE' => $strMainID . '_quant_measure',
-    'QUANTITY_LIMIT' => $strMainID . '_quant_limit',
-    'BASIS_PRICE' => $strMainID . '_basis_price',
-    'BUY_LINK' => $strMainID . '_buy_link',
-    'ADD_BASKET_LINK' => $strMainID . '_add_basket_link',
-    'BASKET_ACTIONS' => $strMainID . '_basket_actions',
-    'NOT_AVAILABLE_MESS' => $strMainID . '_not_avail',
-    'COMPARE_LINK' => $strMainID . '_compare_link',
-    'PROP' => $strMainID . '_prop_',
-    'PROP_DIV' => $strMainID . '_skudiv',
-    'DISPLAY_PROP_DIV' => $strMainID . '_sku_prop',
-    'OFFER_GROUP' => $strMainID . '_set_group_',
-    'BASKET_PROP_DIV' => $strMainID . '_basket_prop',
-    'SUBSCRIBE_LINK' => $strMainID . '_subscribe',
-);
-$strObName = 'ob' . preg_replace("/[^a-zA-Z0-9_]/", "x", $strMainID);
-$templateData['JS_OBJ'] = $strObName;
-
-$strTitle = (
-isset($arResult["IPROPERTY_VALUES"]["ELEMENT_DETAIL_PICTURE_FILE_TITLE"]) && $arResult["IPROPERTY_VALUES"]["ELEMENT_DETAIL_PICTURE_FILE_TITLE"] != ''
-    ? $arResult["IPROPERTY_VALUES"]["ELEMENT_DETAIL_PICTURE_FILE_TITLE"]
-    : $arResult['NAME']
-);
-$strAlt = (
-isset($arResult["IPROPERTY_VALUES"]["ELEMENT_DETAIL_PICTURE_FILE_ALT"]) && $arResult["IPROPERTY_VALUES"]["ELEMENT_DETAIL_PICTURE_FILE_ALT"] != ''
-    ? $arResult["IPROPERTY_VALUES"]["ELEMENT_DETAIL_PICTURE_FILE_ALT"]
-    : $arResult['NAME']
-);
 ?>
-<?reset($arResult['MORE_PHOTO']);
-$arFirstPhoto = current($arResult['MORE_PHOTO']);
-?>
+<?
+if (!empty($arResult['ITEMS'])) {
+    $templateLibrary = array('popup');
+    $currencyList = '';
+    if (!empty($arResult['CURRENCIES'])) {
+        $templateLibrary[] = 'currency';
+        $currencyList = CUtil::PhpToJSObject($arResult['CURRENCIES'], false, true, true);
+    }
+    $templateData = array(
+        'TEMPLATE_THEME' => $this->GetFolder() . '/themes/' . $arParams['TEMPLATE_THEME'] . '/style.css',
+        'TEMPLATE_CLASS' => 'bx_' . $arParams['TEMPLATE_THEME'],
+        'TEMPLATE_LIBRARY' => $templateLibrary,
+        'CURRENCIES' => $currencyList
+    );
+    unset($currencyList, $templateLibrary);
 
-<div class="b-card__slider">
-    <div class="b-slider card__slider">
-        <?if (!empty($arResult["PROPERTIES"]["SLIDER"]["VALUE"])):?>
-            <?foreach($arResult["PROPERTIES"]["SLIDER"]["VALUE"] as $photo):?>
-                <div class="b-slider__item" style="background-image: url(<?=CFile::GetPath($photo)?>)"></div>
-            <?endforeach?>
-            <?unset($photo); ?>
-        <?endif?>
+    $skuTemplate = array();
+    if (!empty($arResult['SKU_PROPS'])) {
+        foreach ($arResult['SKU_PROPS'] as $arProp) {
+            $propId = $arProp['ID'];
+            $skuTemplate[$propId] = array(
+                'SCROLL' => array(
+                    'START' => '',
+                    'FINISH' => '',
+                ),
+                'FULL' => array(
+                    'START' => '',
+                    'FINISH' => '',
+                ),
+                'ITEMS' => array()
+            );
+            $templateRow = '';
+            if ('TEXT' == $arProp['SHOW_MODE']) {
+                $skuTemplate[$propId]['SCROLL']['START'] = '<div class="bx_item_detail_size full" id="#ITEM#_prop_' . $propId . '_cont">' .
+                    '<span class="bx_item_section_name_gray">' . htmlspecialcharsbx($arProp['NAME']) . '</span>' .
+                    '<div class="bx_size_scroller_container"><div class="bx_size"><ul id="#ITEM#_prop_' . $propId . '_list" style="width: #WIDTH#;">';;
+                $skuTemplate[$propId]['SCROLL']['FINISH'] = '</ul></div>' .
+                    '<div class="bx_slide_left" id="#ITEM#_prop_' . $propId . '_left" data-treevalue="' . $propId . '" style=""></div>' .
+                    '<div class="bx_slide_right" id="#ITEM#_prop_' . $propId . '_right" data-treevalue="' . $propId . '" style=""></div>' .
+                    '</div></div>';
 
-    </div>
-    <?if(!empty($arResult['PREVIEW_TEXT'])):?>
-        <div class="b-card__inner">
-            <h2>Описание</h2>
-            <div class="b-card__anons">
-                <?=$arResult['PREVIEW_TEXT']?>
-            </div>
-        </div>
-    <?endif;?>
-</div>
-
-<div class="b-card__info">
-    <? if ('Y' == $arParams['DISPLAY_NAME']):?>
-        <h2><?echo(isset($arResult["IPROPERTY_VALUES"]["ELEMENT_PAGE_TITLE"]) && $arResult["IPROPERTY_VALUES"]["ELEMENT_PAGE_TITLE"] != '' ? $arResult["IPROPERTY_VALUES"]["ELEMENT_PAGE_TITLE"] : $arResult["NAME"]); ?></h2>
-    <?endif;?>
-    <div class="card__price">
-        цена: <span> <span id="lprice"><?=$arResult['DISPLAY_PROPERTIES']['PRICE']['VALUE']?></span> тенге/м<sup>2</sup></span>
-    </div>
-
-    <div class="card__calc">
-
-        <?if(empty($arResult['DISPLAY_PROPERTIES']['LENGTH_BOARD']['VALUE'])):?>
-            <div class="card__inner">
-                <div data-trigger="spinner" id="spinner">
-                    <a href="javascript:;" data-spin="down">-</a>
-                    <input type="text" value="1" data-rule="quantity">
-                    <a href="javascript:;" data-spin="up">+</a>
-                </div>
-            </div>
-        <?else:?>
-            <p>Введите метраж вашего помещения</p>
-            <div class="card__inner">
-                <form action="" class="form">
-                    <div class="card__items">
-                        <div class="card__item">
-                            <label for="">Длина комнаты(м)</label>
-                            <input id="len-room" type="text"  value="<?=$arResult['DISPLAY_PROPERTIES']['LENGTH_ROOM']['VALUE']?>">
-                        </div>
-                        <div class="card__item">
-                            <label for="">Ширина комнаты(м)</label>
-                            <input id="width-room" type="text" value="<?=$arResult['DISPLAY_PROPERTIES']['WIDTH_ROOM']['VALUE']?>">
-                        </div>
-                    </div>
-                    <div class="card__items">
-                        <div class="card__item">
-                            <label for="">Длина доски</label>
-                            <input id="len-board" type="text"  disabled="disabled" value="<?=$arResult['DISPLAY_PROPERTIES']['LENGTH_BOARD']['VALUE']?>">
-                        </div>
-                        <div class="card__item">
-                            <label for="">Ширина доски</label>
-                            <input id="width-board" type="text" disabled="disabled" value="<?=$arResult['DISPLAY_PROPERTIES']['WIDTH_BOARD']['VALUE']?>">
-                        </div>
-                    </div>
-                    <div class="card__items">
-                        <div class="card__item">
-                            <label for="">Число досок<br>в упаковке </label>
-                            <input id="number-board" type="text"  disabled="disabled" value="<?=$arResult['DISPLAY_PROPERTIES']['NUMBER_BOARD']['VALUE']?>">
-                        </div>
-                        <div class="card__item">
-                            <label for="">Число упаковок </label>
-                            <input id="number-packaging" type="text"  disabled="disabled" value="">
-                        </div>
-                        <!--<div class="card__item">
-                            <label for="">Укладка по</label>
-                            <select class="card__select" name="" id="">
-                                <option value="">Длине</option>
-                                <option value="">Ширине</option>
-                            </select>
-                        </div>-->
-                </form>
-            </div>
-        <?endif;?>
-
-    </div>
-    <div class="card__price card__price-error"><span></span></div>
-
-    <div class="card__price card__price-itog">
-        итого: <span><i id="spinner-value" data-price="<?=$arResult['DISPLAY_PROPERTIES']['PRICE']['VALUE']?>"> <?=$arResult['DISPLAY_PROPERTIES']['PRICE']['VALUE']?></i> тенге</span>
-    </div>
-
-
-    <a href="#sales" class="b-btn b-btn_header popap_box" data-body="call">ХОЧУ КУПИТЬ</a>
-
-    <? if (!empty($arResult['DISPLAY_PROPERTIES']) || $arResult['SHOW_OFFERS_PROPS']) : ?>
-        <div class="b-card-char">
-            <div class="title">ХАРАКТЕРИСТИКИ</div>
-            <? if (!empty($arResult['DISPLAY_PROPERTIES'])): ?>
-                <ul class="list char__list">
-                    <?foreach ($arResult['DISPLAY_PROPERTIES'] as &$arOneProp): ?>
-                        <?if(true):?>
-                            <li>
-                                <span class="ch-title"><?= $arOneProp['NAME']; ?></span>
-                                <span class="ch-d"><i></i></span>
-                                    <span class="ch-name"><? echo(
-                                        is_array($arOneProp['DISPLAY_VALUE'])
-                                            ? implode(' / ', $arOneProp['DISPLAY_VALUE'])
-                                            : $arOneProp['DISPLAY_VALUE']
-                                        ); ?></span>
-                            </li>
-                        <?endif;?>
-                    <?endforeach;?>
-                    <?unset($arOneProp); ?>
-                </ul>
-            <? endif; ?>
-        </div>
-    <?endif;?>
-</div>
-
-
-
-<? if (isset($arResult['OFFERS']) && !empty($arResult['OFFERS'])) {
-    foreach ($arResult['JS_OFFERS'] as &$arOneJS) {
-        if ($arOneJS['PRICE']['DISCOUNT_VALUE'] != $arOneJS['PRICE']['VALUE']) {
-            $arOneJS['PRICE']['DISCOUNT_DIFF_PERCENT'] = -$arOneJS['PRICE']['DISCOUNT_DIFF_PERCENT'];
-            $arOneJS['BASIS_PRICE']['DISCOUNT_DIFF_PERCENT'] = -$arOneJS['BASIS_PRICE']['DISCOUNT_DIFF_PERCENT'];
-        }
-        $strProps = '';
-        if ($arResult['SHOW_OFFERS_PROPS']) {
-            if (!empty($arOneJS['DISPLAY_PROPERTIES'])) {
-                foreach ($arOneJS['DISPLAY_PROPERTIES'] as $arOneProp) {
-                    $strProps .= '<dt>' . $arOneProp['NAME'] . '</dt><dd>' . (
-                        is_array($arOneProp['VALUE'])
-                            ? implode(' / ', $arOneProp['VALUE'])
-                            : $arOneProp['VALUE']
-                        ) . '</dd>';
+                $skuTemplate[$propId]['FULL']['START'] = '<div class="bx_item_detail_size" id="#ITEM#_prop_' . $propId . '_cont">' .
+                    '<span class="bx_item_section_name_gray">' . htmlspecialcharsbx($arProp['NAME']) . '</span>' .
+                    '<div class="bx_size_scroller_container"><div class="bx_size"><ul id="#ITEM#_prop_' . $propId . '_list" style="width: #WIDTH#;">';;
+                $skuTemplate[$propId]['FULL']['FINISH'] = '</ul></div>' .
+                    '<div class="bx_slide_left" id="#ITEM#_prop_' . $propId . '_left" data-treevalue="' . $propId . '" style="display: none;"></div>' .
+                    '<div class="bx_slide_right" id="#ITEM#_prop_' . $propId . '_right" data-treevalue="' . $propId . '" style="display: none;"></div>' .
+                    '</div></div>';
+                foreach ($arProp['VALUES'] as $value) {
+                    $value['NAME'] = htmlspecialcharsbx($value['NAME']);
+                    $skuTemplate[$propId]['ITEMS'][$value['ID']] = '<li data-treevalue="' . $propId . '_' . $value['ID'] .
+                        '" data-onevalue="' . $value['ID'] . '" style="width: #WIDTH#;" title="' . $value['NAME'] . '"><i></i><span class="cnt">' . $value['NAME'] . '</span></li>';
                 }
+                unset($value);
+            } elseif ('PICT' == $arProp['SHOW_MODE']) {
+                $skuTemplate[$propId]['SCROLL']['START'] = '<div class="bx_item_detail_scu full" id="#ITEM#_prop_' . $propId . '_cont">' .
+                    '<span class="bx_item_section_name_gray">' . htmlspecialcharsbx($arProp['NAME']) . '</span>' .
+                    '<div class="bx_scu_scroller_container"><div class="bx_scu"><ul id="#ITEM#_prop_' . $propId . '_list" style="width: #WIDTH#;">';
+                $skuTemplate[$propId]['SCROLL']['FINISH'] = '</ul></div>' .
+                    '<div class="bx_slide_left" id="#ITEM#_prop_' . $propId . '_left" data-treevalue="' . $propId . '" style=""></div>' .
+                    '<div class="bx_slide_right" id="#ITEM#_prop_' . $propId . '_right" data-treevalue="' . $propId . '" style=""></div>' .
+                    '</div></div>';
+
+                $skuTemplate[$propId]['FULL']['START'] = '<div class="bx_item_detail_scu" id="#ITEM#_prop_' . $propId . '_cont">' .
+                    '<span class="bx_item_section_name_gray">' . htmlspecialcharsbx($arProp['NAME']) . '</span>' .
+                    '<div class="bx_scu_scroller_container"><div class="bx_scu"><ul id="#ITEM#_prop_' . $propId . '_list" style="width: #WIDTH#;">';
+                $skuTemplate[$propId]['FULL']['FINISH'] = '</ul></div>' .
+                    '<div class="bx_slide_left" id="#ITEM#_prop_' . $propId . '_left" data-treevalue="' . $propId . '" style="display: none;"></div>' .
+                    '<div class="bx_slide_right" id="#ITEM#_prop_' . $propId . '_right" data-treevalue="' . $propId . '" style="display: none;"></div>' .
+                    '</div></div>';
+                foreach ($arProp['VALUES'] as $value) {
+                    $value['NAME'] = htmlspecialcharsbx($value['NAME']);
+                    $skuTemplate[$propId]['ITEMS'][$value['ID']] = '<li data-treevalue="' . $propId . '_' . $value['ID'] .
+                        '" data-onevalue="' . $value['ID'] . '" style="width: #WIDTH#; padding-top: #WIDTH#;"><i title="' . $value['NAME'] . '"></i>' .
+                        '<span class="cnt"><span class="cnt_item" style="background-image:url(\'' . $value['PICT']['SRC'] . '\');" title="' . $value['NAME'] . '"></span></span></li>';
+                }
+                unset($value);
             }
         }
-        $arOneJS['DISPLAY_PROPERTIES'] = $strProps;
+        unset($templateRow, $arProp);
     }
-    if (isset($arOneJS))
-        unset($arOneJS);
-    $arJSParams = array(
-        'CONFIG' => array(
-            'USE_CATALOG' => $arResult['CATALOG'],
-            'SHOW_QUANTITY' => $arParams['USE_PRODUCT_QUANTITY'],
-            'SHOW_PRICE' => true,
-            'SHOW_DISCOUNT_PERCENT' => ($arParams['SHOW_DISCOUNT_PERCENT'] == 'Y'),
-            'SHOW_OLD_PRICE' => ($arParams['SHOW_OLD_PRICE'] == 'Y'),
-            'DISPLAY_COMPARE' => $arParams['DISPLAY_COMPARE'],
-            'SHOW_SKU_PROPS' => $arResult['SHOW_OFFERS_PROPS'],
-            'OFFER_GROUP' => $arResult['OFFER_GROUP'],
-            'MAIN_PICTURE_MODE' => $arParams['DETAIL_PICTURE_MODE'],
-            'SHOW_BASIS_PRICE' => ($arParams['SHOW_BASIS_PRICE'] == 'Y'),
-            'ADD_TO_BASKET_ACTION' => $arParams['ADD_TO_BASKET_ACTION'],
-            'SHOW_CLOSE_POPUP' => ($arParams['SHOW_CLOSE_POPUP'] == 'Y'),
-            'USE_STICKERS' => true,
-            'USE_SUBSCRIBE' => $showSubscribeBtn,
-        ),
-        'PRODUCT_TYPE' => $arResult['CATALOG_TYPE'],
-        'VISUAL' => array(
-            'ID' => $arItemIDs['ID'],
-        ),
-        'DEFAULT_PICTURE' => array(
-            'PREVIEW_PICTURE' => $arResult['DEFAULT_PICTURE'],
-            'DETAIL_PICTURE' => $arResult['DEFAULT_PICTURE']
-        ),
-        'PRODUCT' => array(
-            'ID' => $arResult['ID'],
-            'NAME' => $arResult['~NAME']
-        ),
-        'BASKET' => array(
-            'QUANTITY' => $arParams['PRODUCT_QUANTITY_VARIABLE'],
-            'BASKET_URL' => $arParams['BASKET_URL'],
-            'SKU_PROPS' => $arResult['OFFERS_PROP_CODES'],
-            'ADD_URL_TEMPLATE' => $arResult['~ADD_URL_TEMPLATE'],
-            'BUY_URL_TEMPLATE' => $arResult['~BUY_URL_TEMPLATE']
-        ),
-        'OFFERS' => $arResult['JS_OFFERS'],
-        'OFFER_SELECTED' => $arResult['OFFERS_SELECTED'],
-        'TREE_PROPS' => $arSkuProps
-    );
-    if ($arParams['DISPLAY_COMPARE']) {
-        $arJSParams['COMPARE'] = array(
-            'COMPARE_URL_TEMPLATE' => $arResult['~COMPARE_URL_TEMPLATE'],
-            'COMPARE_PATH' => $arParams['COMPARE_PATH']
-        );
+
+    if ($arParams["DISPLAY_TOP_PAGER"]) {
+        ?><?= $arResult["NAV_STRING"]; ?><?
     }
-} else {
-    $emptyProductProperties = empty($arResult['PRODUCT_PROPERTIES']);
-    if ('Y' == $arParams['ADD_PROPERTIES_TO_BASKET'] && !$emptyProductProperties) {
-        ?>
-        <div id="<? echo $arItemIDs['BASKET_PROP_DIV']; ?>" style="display: none;">
-            <? if (!empty($arResult['PRODUCT_PROPERTIES_FILL'])) {
-                foreach ($arResult['PRODUCT_PROPERTIES_FILL'] as $propID => $propInfo) {
-                    ?>
-                    <input type="hidden" name="<? echo $arParams['PRODUCT_PROPS_VARIABLE']; ?>[<? echo $propID; ?>]"
-                           value="<? echo htmlspecialcharsbx($propInfo['ID']); ?>">
+
+    $strElementEdit = CIBlock::GetArrayByID($arParams["IBLOCK_ID"], "ELEMENT_EDIT");
+    $strElementDelete = CIBlock::GetArrayByID($arParams["IBLOCK_ID"], "ELEMENT_DELETE");
+    $arElementDeleteParams = array("CONFIRM" => GetMessage('CT_BCS_TPL_ELEMENT_DELETE_CONFIRM'));
+
+    if ($arParams['HIDE_SECTION_DESCRIPTION'] !== 'Y') { ?>
+        <div class="bx-section-desc <?= $templateData['TEMPLATE_CLASS']; ?>">
+            <p class="bx-section-desc-post"><?= $arResult["DESCRIPTION"] ?></p>
+        </div>
+    <? } ?>
+    <div class="b-catalog__inner">
+        <div class="container-fluid">
+            <div class="row">
+                <? foreach ($arResult['ITEMS'] as $key => $arItem) {
+                    $this->AddEditAction($arItem['ID'], $arItem['EDIT_LINK'], $strElementEdit);
+                    $this->AddDeleteAction($arItem['ID'], $arItem['DELETE_LINK'], $strElementDelete, $arElementDeleteParams);
+                    $strMainID = $this->GetEditAreaId($arItem['ID']);
+
+                    $arItemIDs = array(
+                        'ID' => $strMainID,
+                        'PICT' => $strMainID . '_pict',
+                        'SECOND_PICT' => $strMainID . '_secondpict',
+                        'STICKER_ID' => $strMainID . '_sticker',
+                        'SECOND_STICKER_ID' => $strMainID . '_secondsticker',
+                        'QUANTITY' => $strMainID . '_quantity',
+                        'QUANTITY_DOWN' => $strMainID . '_quant_down',
+                        'QUANTITY_UP' => $strMainID . '_quant_up',
+                        'QUANTITY_MEASURE' => $strMainID . '_quant_measure',
+                        'BUY_LINK' => $strMainID . '_buy_link',
+                        'BASKET_ACTIONS' => $strMainID . '_basket_actions',
+                        'NOT_AVAILABLE_MESS' => $strMainID . '_not_avail',
+                        'SUBSCRIBE_LINK' => $strMainID . '_subscribe',
+                        'COMPARE_LINK' => $strMainID . '_compare_link',
+
+                        'PRICE' => $strMainID . '_price',
+                        'DSC_PERC' => $strMainID . '_dsc_perc',
+                        'SECOND_DSC_PERC' => $strMainID . '_second_dsc_perc',
+                        'PROP_DIV' => $strMainID . '_sku_tree',
+                        'PROP' => $strMainID . '_prop_',
+                        'DISPLAY_PROP_DIV' => $strMainID . '_sku_prop',
+                        'BASKET_PROP_DIV' => $strMainID . '_basket_prop',
+                    );
+
+                    $strObName = 'ob' . preg_replace("/[^a-zA-Z0-9_]/", "x", $strMainID);
+
+                    $productTitle = (
+                    isset($arItem['IPROPERTY_VALUES']['ELEMENT_PAGE_TITLE']) && $arItem['IPROPERTY_VALUES']['ELEMENT_PAGE_TITLE'] != ''
+                        ? $arItem['IPROPERTY_VALUES']['ELEMENT_PAGE_TITLE']
+                        : $arItem['NAME']
+                    );
+                    $imgTitle = (
+                    isset($arItem['IPROPERTY_VALUES']['ELEMENT_PREVIEW_PICTURE_FILE_TITLE']) && $arItem['IPROPERTY_VALUES']['ELEMENT_PREVIEW_PICTURE_FILE_TITLE'] != ''
+                        ? $arItem['IPROPERTY_VALUES']['ELEMENT_PREVIEW_PICTURE_FILE_TITLE']
+                        : $arItem['NAME']
+                    );
+
+                    $minPrice = false;
+                    if (isset($arItem['MIN_PRICE']) || isset($arItem['RATIO_PRICE'])) $minPrice = (isset($arItem['RATIO_PRICE']) ? $arItem['RATIO_PRICE'] : $arItem['MIN_PRICE']);?>
                     <?
-                    if (isset($arResult['PRODUCT_PROPERTIES'][$propID]))
-                        unset($arResult['PRODUCT_PROPERTIES'][$propID]);
-                }
-            }
-            $emptyProductProperties = empty($arResult['PRODUCT_PROPERTIES']);
-            if (!$emptyProductProperties) {?>
-                <table>
-                    <?foreach ($arResult['PRODUCT_PROPERTIES'] as $propID => $propInfo):?>
-                        <tr>
-                            <td><? echo $arResult['PROPERTIES'][$propID]['NAME']; ?></td>
-                            <td>
-                                <? if (
-                                    'L' == $arResult['PROPERTIES'][$propID]['PROPERTY_TYPE']
-                                    && 'C' == $arResult['PROPERTIES'][$propID]['LIST_TYPE']
-                                ) {
-                                    foreach ($propInfo['VALUES'] as $valueID => $value) {?>
-                                        <label><input type="radio"
-                                                      name="<? echo $arParams['PRODUCT_PROPS_VARIABLE']; ?>[<? echo $propID; ?>]"
-                                                      value="<? echo $valueID; ?>" <? echo($valueID == $propInfo['SELECTED'] ? '"checked"' : ''); ?>><? echo $value; ?>
-                                        </label><br>
-                                    <?}
-                                } else {?>
-                                    <select name="<? echo $arParams['PRODUCT_PROPS_VARIABLE']; ?>[<? echo $propID; ?>]">
-                                        <?foreach ($propInfo['VALUES'] as $valueID => $value) {?>
-                                            <option value="<? echo $valueID; ?>" <? echo($valueID == $propInfo['SELECTED'] ? '"selected"' : ''); ?>><? echo $value; ?></option>
-                                        <?}?>
-                                    </select>
-                                <?}?>
-                            </td>
-                        </tr>
-                    <?endforeach;?>
-                </table>
+                    $price = $arItem['DISPLAY_PROPERTIES']['PRICE']['VALUE'];
+                    $discount = $arItem['DISPLAY_PROPERTIES']['DISCOUNT']['VALUE'];
+                    $discount_2 = $arItem['DISPLAY_PROPERTIES']['DISCOUNT_2']['VALUE'];
+                    $new = $arItem['DISPLAY_PROPERTIES']['NEW']['VALUE'];
+                    ?>
+                    <div class="col-md-6 col-lg-4 col-sm-6 no-pad">
+                        <a href="<?= $arItem['DETAIL_PAGE_URL']; ?>" title="<?=$productTitle;?>" class="b-catalog__item" id="<?= $strMainID; ?>">
+                            <div class="b-catalog__img">
+                                <?if(!empty($arItem['PREVIEW_PICTURE']['SRC'])):?>
+                                    <img src="<?= $arItem['PREVIEW_PICTURE']['SRC']; ?>" alt="<?= $imgTitle; ?>">
+                                <?else:?>
+                                    <img src="<?=$componentPath?>/images/news01.jpg" alt="<?= $imgTitle; ?>">
+                                <?endif;?>
+                                <div class="b-catalog__property">
+                                    <?if(!empty($discount_2)):?>
+                                        <div class="b-catalog__discount"><?=$discount_2?>%</div>
+                                    <?endif;?>
+                                    <?if(!empty($new== 'Да')):?>
+                                        <div class="b-catalog__discount">New</div>
+                                    <?endif;?>
+                                </div>
+                                <?if($arItem['DISPLAY_PROPERTIES']['COUNTRY']['VALUE_ENUM_ID']== '99'):?>
+                                    <div class="b-catalog__label"><img src="<?=$templateFolder?>/img/3.png" alt=""></div>
+                                <?elseif($arItem['DISPLAY_PROPERTIES']['COUNTRY']['VALUE_ENUM_ID']== '6'):?>
+                                    <div class="b-catalog__label"><img src="<?=$templateFolder?>/img/2.png" alt=""></div>
+                                <?elseif($arItem['DISPLAY_PROPERTIES']['COUNTRY']['VALUE_ENUM_ID']== '7'):?>
+                                    <div class="b-catalog__label"><img src="<?=$templateFolder?>/img/11.png" alt=""></div>
+                                <?elseif($arItem['DISPLAY_PROPERTIES']['COUNTRY']['VALUE_ENUM_ID']== '8'):?>
+                                    <div class="b-catalog__label"><img src="<?=$templateFolder?>/img/5.png" alt=""></div>
+                                <?elseif($arItem['DISPLAY_PROPERTIES']['COUNTRY']['VALUE_ENUM_ID']== '9'):?>
+                                    <div class="b-catalog__label"><img src="<?=$templateFolder?>/img/3.png" alt=""></div>
+                                <?elseif($arItem['DISPLAY_PROPERTIES']['COUNTRY']['VALUE_ENUM_ID']== '10'):?>
+                                    <div class="b-catalog__label"><img src="<?=$templateFolder?>/img/8.png" alt=""></div>
+                                <?elseif($arItem['DISPLAY_PROPERTIES']['COUNTRY']['VALUE_ENUM_ID']== '31'):?>
+                                    <div class="b-catalog__label"><img src="<?=$templateFolder?>/img/9.png" alt=""></div>
+                                <?elseif($arItem['DISPLAY_PROPERTIES']['COUNTRY']['VALUE_ENUM_ID']== '98'):?>
+                                    <div class="b-catalog__label"><img src="<?=$templateFolder?>/img/3.png" alt=""></div>
+                                <?elseif($arItem['DISPLAY_PROPERTIES']['COUNTRY']['VALUE_ENUM_ID']== '99'):?>
+                                    <div class="b-catalog__label"><img src="<?=$templateFolder?>/img/3.png" alt=""></div>
+                                <?elseif($arItem['DISPLAY_PROPERTIES']['COUNTRY']['VALUE_ENUM_ID']== '100'):?>
+                                    <div class="b-catalog__label"><img src="<?=$templateFolder?>/img/6.png" alt=""></div>
+                                <?elseif($arItem['DISPLAY_PROPERTIES']['COUNTRY']['VALUE_ENUM_ID']== '101'):?>
+                                    <div class="b-catalog__label"><img src="<?=$templateFolder?>/img/7.png" alt=""></div>
+                                <?elseif($arItem['DISPLAY_PROPERTIES']['COUNTRY']['VALUE_ENUM_ID']== '102'):?>
+                                    <div class="b-catalog__label"><img src="<?=$templateFolder?>/img/10.png" alt=""></div>
+                                <?elseif($arItem['DISPLAY_PROPERTIES']['COUNTRY']['VALUE_ENUM_ID']== '103'):?>
+                                    <div class="b-catalog__label"><img src="<?=$templateFolder?>/img/12.png" alt=""></div>
+                                <?endif?>
+                                <style>
+                                    .b-catalog__label{
+                                        position: absolute;
+                                        top: -10px;
+                                        right: -10px;
+                                    }
+                                </style>
+                            </div>
+                            <div class="b-catalog__txt">
+                                <div class="" style="display:none">
+                                    <?
+                                    echo "<pre>";
+                                    print_r($arItem['DISPLAY_PROPERTIES']['COUNTRY']['VALUE_ENUM_ID']);
+                                    echo "</pre>";
+                                    ?>
+                                </div>
 
-            <?}?>
+                                <div class="b-catalog__name" style="display: block;"><?=TruncateText($productTitle, 50);?></div>
+                                <div class="b-catalog__size"><?=$arItem['DISPLAY_PROPERTIES']['SIZE']['VALUE']?></div>
+                                <div class="b-catalog__city"><?=$arItem['DISPLAY_PROPERTIES']['COUNTRY']['VALUE']?></div>
+                                <?if(!empty($discount_2)):?>
 
+                                    <div class="b-catalog__price" id="<?= $arItemIDs['PRICE']; ?>"><s><?=$price?></s> <?= $price-(($price * $discount_2)/100)?> тенге/м2</div>
+                                <?else:?>
+                                    <div class="b-catalog__price" id="<?= $arItemIDs['PRICE']; ?>"><?=$arItem['DISPLAY_PROPERTIES']['PRICE']['VALUE']?> тенге/м2</div>
+                                <?endif;?>
+
+                            </div>
+                        </a>
+                    </div>
+                <?}?>
+            </div>
         </div>
-        <?
+    </div>
+    <script type="text/javascript">
+        BX.message({
+            BTN_MESSAGE_BASKET_REDIRECT: '<?=  GetMessageJS('CT_BCS_CATALOG_BTN_MESSAGE_BASKET_REDIRECT'); ?>',
+            BASKET_URL: '<?=  $arParams["BASKET_URL"]; ?>',
+            ADD_TO_BASKET_OK: '<?=  GetMessageJS('ADD_TO_BASKET_OK'); ?>',
+            TITLE_ERROR: '<?=  GetMessageJS('CT_BCS_CATALOG_TITLE_ERROR') ?>',
+            TITLE_BASKET_PROPS: '<?=  GetMessageJS('CT_BCS_CATALOG_TITLE_BASKET_PROPS') ?>',
+            TITLE_SUCCESSFUL: '<?=  GetMessageJS('ADD_TO_BASKET_OK'); ?>',
+            BASKET_UNKNOWN_ERROR: '<?=  GetMessageJS('CT_BCS_CATALOG_BASKET_UNKNOWN_ERROR') ?>',
+            BTN_MESSAGE_SEND_PROPS: '<?=  GetMessageJS('CT_BCS_CATALOG_BTN_MESSAGE_SEND_PROPS'); ?>',
+            BTN_MESSAGE_CLOSE: '<?=  GetMessageJS('CT_BCS_CATALOG_BTN_MESSAGE_CLOSE') ?>',
+            BTN_MESSAGE_CLOSE_POPUP: '<?=  GetMessageJS('CT_BCS_CATALOG_BTN_MESSAGE_CLOSE_POPUP'); ?>',
+            COMPARE_MESSAGE_OK: '<?=  GetMessageJS('CT_BCS_CATALOG_MESS_COMPARE_OK') ?>',
+            COMPARE_UNKNOWN_ERROR: '<?=  GetMessageJS('CT_BCS_CATALOG_MESS_COMPARE_UNKNOWN_ERROR') ?>',
+            COMPARE_TITLE: '<?=  GetMessageJS('CT_BCS_CATALOG_MESS_COMPARE_TITLE') ?>',
+            BTN_MESSAGE_COMPARE_REDIRECT: '<?=  GetMessageJS('CT_BCS_CATALOG_BTN_MESSAGE_COMPARE_REDIRECT') ?>',
+            SITE_ID: '<?=  SITE_ID; ?>'
+        });
+    </script>
+    <?
+    if ($arParams["DISPLAY_BOTTOM_PAGER"]) {
+        ?><?= $arResult["NAV_STRING"]; ?><?
     }
-    if ($arResult['MIN_PRICE']['DISCOUNT_VALUE'] != $arResult['MIN_PRICE']['VALUE']) {
-        $arResult['MIN_PRICE']['DISCOUNT_DIFF_PERCENT'] = -$arResult['MIN_PRICE']['DISCOUNT_DIFF_PERCENT'];
-        $arResult['MIN_BASIS_PRICE']['DISCOUNT_DIFF_PERCENT'] = -$arResult['MIN_BASIS_PRICE']['DISCOUNT_DIFF_PERCENT'];
-    }
-    $arJSParams = array(
-        'CONFIG' => array(
-            'USE_CATALOG' => $arResult['CATALOG'],
-            'SHOW_QUANTITY' => $arParams['USE_PRODUCT_QUANTITY'],
-            'SHOW_PRICE' => (isset($arResult['MIN_PRICE']) && !empty($arResult['MIN_PRICE']) && is_array($arResult['MIN_PRICE'])),
-            'SHOW_DISCOUNT_PERCENT' => ($arParams['SHOW_DISCOUNT_PERCENT'] == 'Y'),
-            'SHOW_OLD_PRICE' => ($arParams['SHOW_OLD_PRICE'] == 'Y'),
-            'DISPLAY_COMPARE' => $arParams['DISPLAY_COMPARE'],
-            'MAIN_PICTURE_MODE' => $arParams['DETAIL_PICTURE_MODE'],
-            'SHOW_BASIS_PRICE' => ($arParams['SHOW_BASIS_PRICE'] == 'Y'),
-            'ADD_TO_BASKET_ACTION' => $arParams['ADD_TO_BASKET_ACTION'],
-            'SHOW_CLOSE_POPUP' => ($arParams['SHOW_CLOSE_POPUP'] == 'Y'),
-            'USE_STICKERS' => true,
-            'USE_SUBSCRIBE' => $showSubscribeBtn,
-        ),
-        'VISUAL' => array(
-            'ID' => $arItemIDs['ID'],
-        ),
-        'PRODUCT_TYPE' => $arResult['CATALOG_TYPE'],
-        'PRODUCT' => array(
-            'ID' => $arResult['ID'],
-            'PICT' => $arFirstPhoto,
-            'NAME' => $arResult['~NAME'],
-            'SUBSCRIPTION' => true,
-            'PRICE' => $arResult['MIN_PRICE'],
-            'BASIS_PRICE' => $arResult['MIN_BASIS_PRICE'],
-            'SLIDER_COUNT' => $arResult['MORE_PHOTO_COUNT'],
-            'SLIDER' => $arResult['MORE_PHOTO'],
-            'CAN_BUY' => $arResult['CAN_BUY'],
-            'CHECK_QUANTITY' => $arResult['CHECK_QUANTITY'],
-            'QUANTITY_FLOAT' => is_double($arResult['CATALOG_MEASURE_RATIO']),
-            'MAX_QUANTITY' => $arResult['CATALOG_QUANTITY'],
-            'STEP_QUANTITY' => $arResult['CATALOG_MEASURE_RATIO'],
-        ),
-        'BASKET' => array(
-            'ADD_PROPS' => ($arParams['ADD_PROPERTIES_TO_BASKET'] == 'Y'),
-            'QUANTITY' => $arParams['PRODUCT_QUANTITY_VARIABLE'],
-            'PROPS' => $arParams['PRODUCT_PROPS_VARIABLE'],
-            'EMPTY_PROPS' => $emptyProductProperties,
-            'BASKET_URL' => $arParams['BASKET_URL'],
-            'ADD_URL_TEMPLATE' => $arResult['~ADD_URL_TEMPLATE'],
-            'BUY_URL_TEMPLATE' => $arResult['~BUY_URL_TEMPLATE']
-        )
-    );
-    if ($arParams['DISPLAY_COMPARE']) {
-        $arJSParams['COMPARE'] = array(
-            'COMPARE_URL_TEMPLATE' => $arResult['~COMPARE_URL_TEMPLATE'],
-            'COMPARE_PATH' => $arParams['COMPARE_PATH']
-        );
-    }
-    unset($emptyProductProperties);
 }
-?>
-<script type="text/javascript">
-    var <? echo $strObName; ?> =
-    new JCCatalogElement(<? echo CUtil::PhpToJSObject($arJSParams, false, true); ?>);
-    BX.message({
-        ECONOMY_INFO_MESSAGE: '<? echo GetMessageJS('CT_BCE_CATALOG_ECONOMY_INFO'); ?>',
-        BASIS_PRICE_MESSAGE: '<? echo GetMessageJS('CT_BCE_CATALOG_MESS_BASIS_PRICE') ?>',
-        TITLE_ERROR: '<? echo GetMessageJS('CT_BCE_CATALOG_TITLE_ERROR') ?>',
-        TITLE_BASKET_PROPS: '<? echo GetMessageJS('CT_BCE_CATALOG_TITLE_BASKET_PROPS') ?>',
-        BASKET_UNKNOWN_ERROR: '<? echo GetMessageJS('CT_BCE_CATALOG_BASKET_UNKNOWN_ERROR') ?>',
-        BTN_SEND_PROPS: '<? echo GetMessageJS('CT_BCE_CATALOG_BTN_SEND_PROPS'); ?>',
-        BTN_MESSAGE_BASKET_REDIRECT: '<? echo GetMessageJS('CT_BCE_CATALOG_BTN_MESSAGE_BASKET_REDIRECT') ?>',
-        BTN_MESSAGE_CLOSE: '<? echo GetMessageJS('CT_BCE_CATALOG_BTN_MESSAGE_CLOSE'); ?>',
-        BTN_MESSAGE_CLOSE_POPUP: '<? echo GetMessageJS('CT_BCE_CATALOG_BTN_MESSAGE_CLOSE_POPUP'); ?>',
-        TITLE_SUCCESSFUL: '<? echo GetMessageJS('CT_BCE_CATALOG_ADD_TO_BASKET_OK'); ?>',
-        COMPARE_MESSAGE_OK: '<? echo GetMessageJS('CT_BCE_CATALOG_MESS_COMPARE_OK') ?>',
-        COMPARE_UNKNOWN_ERROR: '<? echo GetMessageJS('CT_BCE_CATALOG_MESS_COMPARE_UNKNOWN_ERROR') ?>',
-        COMPARE_TITLE: '<? echo GetMessageJS('CT_BCE_CATALOG_MESS_COMPARE_TITLE') ?>',
-        BTN_MESSAGE_COMPARE_REDIRECT: '<? echo GetMessageJS('CT_BCE_CATALOG_BTN_MESSAGE_COMPARE_REDIRECT') ?>',
-        PRODUCT_GIFT_LABEL: '<? echo GetMessageJS('CT_BCE_CATALOG_PRODUCT_GIFT_LABEL') ?>',
-        SITE_ID: '<? echo SITE_ID; ?>'
-    });
-</script>

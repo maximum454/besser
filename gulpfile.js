@@ -1,147 +1,192 @@
-'use strict';
+let project = 'build';
+let source = 'src';
+let fs = require('fs');
+let path = {
+    build: {
+        html: project + '/',
+        js: project + '/js/',
+        css: project + '/css/',
+        img: project + '/img/',
+        fonts: project + '/fonts/'
+    },
+    src: {
+        html: [source + '/*.html', '!'+source + '/_*.html'],
+        js:  source + '/js/main.js',
+        css: source +  '/scss/main.scss',
+        img: source +  '/img/**/*.*',
+        fonts: source +  '/fonts/**/*.*'
+    },
+    watch: {
+        html: source +  '/**/*.html',
+        js: source +  '/js/**/*.js',
+        css: source +  '/scss/**/*.{scss,css}',
+        img: source +  '/img/**/*.*'
+    },
+    clean: './' + project + '/'
+};
 
-var gulp = require('gulp'),
-    watch = require('gulp-watch'),
-    prefixer = require('gulp-autoprefixer'),
-    plumber = require('gulp-plumber'), //отслеживания ошибок
-    uglify = require('gulp-uglify'),
-    sass = require('gulp-sass'),
-    sourcemaps = require('gulp-sourcemaps'),
-    rigger = require('gulp-rigger'),
-    cssmin = require('gulp-minify-css'),
+let { src, dest } = require('gulp'),
+    gulp = require('gulp'),
+    browsersync = require("browser-sync").create(),
+    fileinclude = require('gulp-file-include'),
+    del = require('del'),
+    scss = require('gulp-sass'),
+    autoprefixer = require('gulp-autoprefixer'),
+    group_media = require('gulp-group-css-media-queries'),
+    clean_css = require('gulp-clean-css'),
+    rename = require('gulp-rename'),
+    uglify = require('gulp-uglify-es').default,
     imagemin = require('gulp-imagemin'),
-    pngquant = require('imagemin-pngquant'),
-    rimraf = require('rimraf'),
-    browserSync = require("browser-sync"),
-    reload = browserSync.reload;
-
-/*Пути к файлам*/
-var path = {
-    build: { //Тут мы укажем куда складывать готовые после сборки файлы
-        html: 'build/',
-        js: 'build/js/',
-        css: 'build/css/',
-        img: 'build/img/',
-        fonts: 'build/fonts/'
-    },
-    src: { //Пути откуда брать исходники
-        html: 'src/*.html', //Синтаксис src/*.html говорит gulp что мы хотим взять все файлы с расширением .html
-        js: 'src/js/main.js',//В стилях и скриптах нам понадобятся только main файлы
-        style: 'src/scss/main.scss',
-        img: 'src/img/**/*.*', //Синтаксис img/**/*.* означает - взять все файлы всех расширений из папки и из вложенных каталогов
-        fonts: 'src/fonts/**/*.*'
-    },
-    watch: { //Тут мы укажем, за изменением каких файлов мы хотим наблюдать
-        html: 'src/**/*.html',
-        js: 'src/js/**/*.js',
-        style: 'src/scss/**/*.scss',
-        img: 'src/img/**/*.*',
-        fonts: 'src/fonts/**/*.*'
-    },
-    clean: './build'
-};
+    webp = require('gulp-webp'),
+    webphtml = require('gulp-webp-html'),
+    webpcss = require('gulp-webpcss'),
+    svgSprite = require('gulp-svg-sprite'),
+    ttf2woff = require('gulp-ttf2woff'),
+    ttf2woff2 = require('gulp-ttf2woff2'),
+    fonter = require('gulp-fonter');
 
 
-/*Веб сервер*/
-var config = {
-    server: {
-        baseDir: "./build"
-    },
-    tunnel: true,
-    host: 'localhost',
-    port: 9000,
-    logPrefix: "Frontend_maximum"
-};
-gulp.task('webserver', function () {
-    browserSync(config);
+function browserSync(params) {
+    browsersync.init({
+        server: {
+            baseDir: './' + project + '/'
+        },
+        host: 'localhost',
+        port: 9000,
+        notify: false,
+        logPrefix: "Frontend_maximum"
+    })
+}
+
+function html(){
+    return src(path.src.html)
+        .pipe(fileinclude())
+        /*.pipe(webphtml())*/
+        .pipe(dest(path.build.html))
+        .pipe(browsersync.stream())
+}
+
+function css(){
+    return src(path.src.css)
+        .pipe(
+            scss({
+                outputStyle:'expanded'
+            })
+        )
+        .pipe(
+            group_media()
+        )
+        .pipe(
+            autoprefixer({
+                overrideBrowserslist: ['last 5 versions'],
+                cascade: true
+            })
+        )
+        /*.pipe(webpcss())*/
+        .pipe(dest(path.build.css))
+        .pipe(clean_css())
+        .pipe(
+            rename({
+                extname: '.min.css'
+            })
+        )
+        .pipe(dest(path.build.css))
+        .pipe(browsersync.stream())
+}
+
+function js(){
+    return src(path.src.js)
+        .pipe(fileinclude())
+        .pipe(dest(path.build.js))
+        .pipe(
+            uglify()
+        )
+        .pipe(
+            rename({
+                extname: '.min.js'
+            })
+        )
+        .pipe(dest(path.build.js))
+        .pipe(browsersync.stream())
+}
+
+function images(){
+    return src(path.src.img)
+        /* подлючение webP
+        .pipe(
+            webp({
+                quality: 70
+            })
+        )
+        .pipe(dest(path.build.img))
+        .pipe(dest(path.src.img))*/
+        .pipe(
+            imagemin({
+                interlaced: true,
+                progressive: true,
+                optimizationLevel: 3,
+                svgoPlugins: [
+                    {
+                        removeViewBox: false
+                    }
+                ]
+            })
+        )
+        .pipe(dest(path.build.img))
+        .pipe(browsersync.stream())
+}
+
+gulp.task('svgSprite', function () {
+    return gulp.src([source + '/iconsprite/*.svg'])
+        .pipe(
+            svgSprite({
+                mode:{
+                    stack: {
+                        sprite: '../icons/icons.svg',
+                        example: true
+                    }
+                },
+            })
+        )
+        .pipe(dest(path.build.img))
+});
+gulp.task('otf2ttf', function () {
+    return gulp.src([source + '/fonts/*.otf'])
+        .pipe(
+            fonter({
+                formats: ['ttf']
+            })
+        )
+        .pipe(dest(path.src.fonts))
 });
 
-/*Собираем html*/
-gulp.task('html:build', function () {
-    gulp.src(path.src.html) //Выберем файлы по нужному пути
-        .pipe(rigger()) //Прогоним через rigger
-        .pipe(gulp.dest(path.build.html)) //Выплюнем их в папку build
-        .pipe(reload({stream: true})); //И перезагрузим наш сервер для обновлений
-});
+function fonts() {
+    src(path.src.fonts)
+        .pipe(ttf2woff())
+        .pipe(dest(path.build.fonts))
+    return src(path.src.fonts)
+        .pipe(ttf2woff2())
+        .pipe(dest(path.build.fonts))
+}
 
+function clean() {
+    return del(path.clean);
+}
+function watchFiles(){
+    gulp.watch([path.watch.html],html);
+    gulp.watch([path.watch.css],css);
+    gulp.watch([path.watch.js],js);
+    gulp.watch([path.watch.img],images);
+}
 
-/*Собираем javascript*/
-gulp.task('js:build', function () {
-    gulp.src(path.src.js) //Найдем наш main файл
-        .pipe(plumber())
-        .pipe(rigger()) //Прогоним через rigger
-        .pipe(sourcemaps.init()) //Инициализируем sourcemap
-        .pipe(uglify()) //Сожмем наш js
-        .pipe(sourcemaps.write()) //Пропишем карты
-        .pipe(gulp.dest(path.build.js)) //Выплюнем готовый файл в build
-        .pipe(reload({stream: true})); //И перезагрузим сервер
-});
+let build = gulp.series(clean, gulp.parallel(js, css, html, images));
+let watch = gulp.parallel(build, watchFiles, browserSync);
 
-/*Собираем стили*/
-gulp.task('style:build', function () {
-    gulp.src(path.src.style) //Выберем наш main.scss
-        .pipe(plumber())
-        .pipe(sourcemaps.init()) //То же самое что и с js
-        .pipe(sass()) //Скомпилируем
-        .pipe(prefixer()) //Добавим вендорные префиксы
-        .pipe(cssmin()) //Сожмем
-        .pipe(sourcemaps.write())
-        .pipe(gulp.dest(path.build.css)) //И в build
-        .pipe(reload({stream: true}));
-});
-
-/*Собираем картинки*/
-gulp.task('image:build', function () {
-    gulp.src(path.src.img) //Выберем наши картинки
-        .pipe(imagemin({ //Сожмем их
-            progressive: true,
-            svgoPlugins: [{removeViewBox: false}],
-            use: [pngquant()],
-            interlaced: true
-        }))
-        .pipe(gulp.dest(path.build.img)) //И бросим в build
-        .pipe(reload({stream: true}));
-});
-
-/*Шрифты*/
-gulp.task('fonts:build', function() {
-    gulp.src(path.src.fonts)
-        .pipe(gulp.dest(path.build.fonts))
-});
-
-
-/*Одноразовая сборка*/
-gulp.task('build', [
-    'html:build',
-    'js:build',
-    'style:build',
-    'fonts:build',
-    'image:build'
-]);
-
-/*Следим за изменениями*/
-gulp.task('watch', function(){
-    watch([path.watch.html], function(event, cb) {
-        gulp.start('html:build');
-    });
-    watch([path.watch.style], function(event, cb) {
-        gulp.start('style:build');
-    });
-    watch([path.watch.js], function(event, cb) {
-        gulp.start('js:build');
-    });
-    watch([path.watch.img], function(event, cb) {
-        gulp.start('image:build');
-    });
-    watch([path.watch.fonts], function(event, cb) {
-        gulp.start('fonts:build');
-    });
-});
-
-/*Очистка удаляется папка build*/
-gulp.task('clean', function (cb) {
-    rimraf(path.clean, cb);
-});
-
-/*Финишь запуск всего*/
-gulp.task('default', ['build', 'webserver', 'watch']);
+exports.fonts = fonts;
+exports.images = images;
+exports.js = js;
+exports.css = css;
+exports.html = html;
+exports.build = build;
+exports.watch = watch;
+exports.default = watch;

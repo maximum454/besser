@@ -1,16 +1,9 @@
-/*
- * Third party
- */
-
-/*
- * Custom
- */
-//= partials/jquery.min.js
-//= partials/rangeslider.min.js
-//= partials/jquery.spinner.min.js
-//= partials/slick.js
-//= partials/jquery.formstyler.js
-//= partials/jquery.arcticmodal-0.3.min.js
-//= partials/owl.carousel.min.js
-//= partials/cal.js
-//= partials/script.js
+@@include('partials/jquery.min.js')
+@@include('partials/rangeslider.min.js')
+@@include('partials/jquery.spinner.min.js')
+@@include('partials/slick.js')
+@@include('partials/jquery.formstyler.js')
+@@include('partials/jquery.arcticmodal-0.3.min.js')
+@@include('partials/owl.carousel.min.js')
+@@include('partials/cal.js')
+@@include('partials/script.js')
